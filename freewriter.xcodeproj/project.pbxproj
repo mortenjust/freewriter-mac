@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5201B0F92C000087B5F /* AppDelegate.swift */; };
+		C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5221B0F92C000087B5F /* ViewController.swift */; };
+		C8FAC5251B0F92C000087B5F /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5241B0F92C000087B5F /* Document.swift */; };
+		C8FAC5271B0F92C000087B5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8FAC5261B0F92C000087B5F /* Images.xcassets */; };
+		C8FAC52A1B0F92C000087B5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8FAC5281B0F92C000087B5F /* Main.storyboard */; };
+		C8FAC5361B0F92C000087B5F /* freewriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5351B0F92C000087B5F /* freewriterTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C8FAC5301B0F92C000087B5F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8FAC5131B0F92C000087B5F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8FAC51A1B0F92C000087B5F;
+			remoteInfo = freewriter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C8FAC51B1B0F92C000087B5F /* freewriter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freewriter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8FAC51F1B0F92C000087B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8FAC5201B0F92C000087B5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C8FAC5221B0F92C000087B5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C8FAC5241B0F92C000087B5F /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		C8FAC5261B0F92C000087B5F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C8FAC5291B0F92C000087B5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C8FAC52F1B0F92C000087B5F /* freewriterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freewriterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8FAC5341B0F92C000087B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8FAC5351B0F92C000087B5F /* freewriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freewriterTests.swift; sourceTree = "<group>"; };
+		C8FAC53F1B0FA09100087B5F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C8FAC5181B0F92C000087B5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C8FAC52C1B0F92C000087B5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C8FAC5121B0F92C000087B5F = {
+			isa = PBXGroup;
+			children = (
+				C8FAC53F1B0FA09100087B5F /* MyPlayground.playground */,
+				C8FAC51D1B0F92C000087B5F /* freewriter */,
+				C8FAC5321B0F92C000087B5F /* freewriterTests */,
+				C8FAC51C1B0F92C000087B5F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C8FAC51C1B0F92C000087B5F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C8FAC51B1B0F92C000087B5F /* freewriter.app */,
+				C8FAC52F1B0F92C000087B5F /* freewriterTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C8FAC51D1B0F92C000087B5F /* freewriter */ = {
+			isa = PBXGroup;
+			children = (
+				C8FAC5201B0F92C000087B5F /* AppDelegate.swift */,
+				C8FAC5221B0F92C000087B5F /* ViewController.swift */,
+				C8FAC5241B0F92C000087B5F /* Document.swift */,
+				C8FAC5261B0F92C000087B5F /* Images.xcassets */,
+				C8FAC5281B0F92C000087B5F /* Main.storyboard */,
+				C8FAC51E1B0F92C000087B5F /* Supporting Files */,
+			);
+			path = freewriter;
+			sourceTree = "<group>";
+		};
+		C8FAC51E1B0F92C000087B5F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C8FAC51F1B0F92C000087B5F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C8FAC5321B0F92C000087B5F /* freewriterTests */ = {
+			isa = PBXGroup;
+			children = (
+				C8FAC5351B0F92C000087B5F /* freewriterTests.swift */,
+				C8FAC5331B0F92C000087B5F /* Supporting Files */,
+			);
+			path = freewriterTests;
+			sourceTree = "<group>";
+		};
+		C8FAC5331B0F92C000087B5F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C8FAC5341B0F92C000087B5F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C8FAC51A1B0F92C000087B5F /* freewriter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C8FAC5391B0F92C000087B5F /* Build configuration list for PBXNativeTarget "freewriter" */;
+			buildPhases = (
+				C8FAC5171B0F92C000087B5F /* Sources */,
+				C8FAC5181B0F92C000087B5F /* Frameworks */,
+				C8FAC5191B0F92C000087B5F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = freewriter;
+			productName = freewriter;
+			productReference = C8FAC51B1B0F92C000087B5F /* freewriter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C8FAC52E1B0F92C000087B5F /* freewriterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C8FAC53C1B0F92C000087B5F /* Build configuration list for PBXNativeTarget "freewriterTests" */;
+			buildPhases = (
+				C8FAC52B1B0F92C000087B5F /* Sources */,
+				C8FAC52C1B0F92C000087B5F /* Frameworks */,
+				C8FAC52D1B0F92C000087B5F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C8FAC5311B0F92C000087B5F /* PBXTargetDependency */,
+			);
+			name = freewriterTests;
+			productName = freewriterTests;
+			productReference = C8FAC52F1B0F92C000087B5F /* freewriterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C8FAC5131B0F92C000087B5F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Morten Just Petersen";
+				TargetAttributes = {
+					C8FAC51A1B0F92C000087B5F = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					C8FAC52E1B0F92C000087B5F = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = C8FAC51A1B0F92C000087B5F;
+					};
+				};
+			};
+			buildConfigurationList = C8FAC5161B0F92C000087B5F /* Build configuration list for PBXProject "freewriter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C8FAC5121B0F92C000087B5F;
+			productRefGroup = C8FAC51C1B0F92C000087B5F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C8FAC51A1B0F92C000087B5F /* freewriter */,
+				C8FAC52E1B0F92C000087B5F /* freewriterTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C8FAC5191B0F92C000087B5F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8FAC5271B0F92C000087B5F /* Images.xcassets in Resources */,
+				C8FAC52A1B0F92C000087B5F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C8FAC52D1B0F92C000087B5F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C8FAC5171B0F92C000087B5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
+				C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */,
+				C8FAC5251B0F92C000087B5F /* Document.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C8FAC52B1B0F92C000087B5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8FAC5361B0F92C000087B5F /* freewriterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C8FAC5311B0F92C000087B5F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8FAC51A1B0F92C000087B5F /* freewriter */;
+			targetProxy = C8FAC5301B0F92C000087B5F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C8FAC5281B0F92C000087B5F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C8FAC5291B0F92C000087B5F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C8FAC5371B0F92C000087B5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C8FAC5381B0F92C000087B5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C8FAC53A1B0F92C000087B5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = freewriter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C8FAC53B1B0F92C000087B5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = freewriter/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C8FAC53D1B0F92C000087B5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = freewriterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/freewriter.app/Contents/MacOS/freewriter";
+			};
+			name = Debug;
+		};
+		C8FAC53E1B0F92C000087B5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = freewriterTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/freewriter.app/Contents/MacOS/freewriter";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C8FAC5161B0F92C000087B5F /* Build configuration list for PBXProject "freewriter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8FAC5371B0F92C000087B5F /* Debug */,
+				C8FAC5381B0F92C000087B5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C8FAC5391B0F92C000087B5F /* Build configuration list for PBXNativeTarget "freewriter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8FAC53A1B0F92C000087B5F /* Debug */,
+				C8FAC53B1B0F92C000087B5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C8FAC53C1B0F92C000087B5F /* Build configuration list for PBXNativeTarget "freewriterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8FAC53D1B0F92C000087B5F /* Debug */,
+				C8FAC53E1B0F92C000087B5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C8FAC5131B0F92C000087B5F /* Project object */;
+}
