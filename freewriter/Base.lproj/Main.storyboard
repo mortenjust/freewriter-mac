@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -10,9 +10,9 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="freewriter" id="1Xt-HY-uBw">
+                            <menuItem title="Freewriter" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="freewriter" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="Freewriter" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="About freewriter" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -581,18 +581,40 @@
                             </menuItem>
                             <menuItem title="View" id="H8h-7b-M4v">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="View" id="HyV-fh-RgO">
+                                <menu key="submenu" title="View" id="JzH-gu-hBU">
                                     <items>
-                                        <menuItem title="Show Toolbar" keyEquivalent="t" id="snW-S8-Cw5">
+                                        <menuItem title="Show Toolbar" keyEquivalent="t" id="yYE-KR-9Ya">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleToolbarShown:" target="Ady-hI-5gd" id="BXY-wc-z0C"/>
+                                                <action selector="toggleToolbarShown:" target="Ady-hI-5gd" id="Irb-xv-j0d"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Customize Toolbar…" id="1UK-8n-QPP">
+                                        <menuItem title="Customize Toolbar…" id="jIx-bM-2E7">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="runToolbarCustomizationPalette:" target="Ady-hI-5gd" id="pQI-g3-MTW"/>
+                                                <action selector="runToolbarCustomizationPalette:" target="Ady-hI-5gd" id="b1G-Ky-Z0u"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Full screen" keyEquivalent="F" id="A6b-Gn-TIc">
+                                            <connections>
+                                                <action selector="toggleFullScreen:" target="Ady-hI-5gd" id="oE8-jj-WYH"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Writing" id="j3g-vY-EyB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Writing" id="VwW-EP-7xE">
+                                    <items>
+                                        <menuItem title="Freewrite" keyEquivalent="W" id="vYp-Vv-xcR">
+                                            <connections>
+                                                <action selector="freeWriteSelected:" target="Ady-hI-5gd" id="Dwk-Dd-KGM"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Revise" keyEquivalent="R" id="RRF-Qt-Mec">
+                                            <connections>
+                                                <action selector="reviseSelected:" target="Ady-hI-5gd" id="8St-dT-6SD"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -652,9 +674,11 @@
                 <windowController storyboardIdentifier="Document Window Controller" id="jGA-0Y-lOj" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ckk-yw-fiv">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="411"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <value key="minSize" type="size" width="485" height="411"/>
                         <connections>
                             <binding destination="jGA-0Y-lOj" name="representedFilename" keyPath="self.window" id="zIx-7Q-TWd"/>
                         </connections>
@@ -676,8 +700,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="485" height="374"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qnp-E1-2ZC">
-                                <rect key="frame" x="0.0" y="12" width="485" height="330"/>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="qnp-E1-2ZC">
+                                <rect key="frame" x="0.0" y="95" width="485" height="247"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ujw-0k-Xmw">
                                     <rect key="frame" x="1" y="1" width="223" height="133"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -687,18 +712,15 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" white="1" alpha="0.71999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <color key="backgroundColor" red="1" green="0.1121158082613799" blue="0.43581648884708113" alpha="0.0" colorSpace="calibratedRGB"/>
-                                            <size key="minSize" width="485" height="330"/>
+                                            <size key="minSize" width="485" height="247"/>
                                             <size key="maxSize" width="485" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="485" height="330"/>
+                                            <size key="minSize" width="485" height="247"/>
                                             <size key="maxSize" width="485" height="10000000"/>
                                         </textView>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="0.87524796692153028" blue="0.29016978758741774" alpha="1" colorSpace="calibratedRGB"/>
                                 </clipView>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="485" id="jQq-K8-818"/>
-                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Jcd-ea-f6a">
                                     <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -708,58 +730,44 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <progressIndicator maxValue="100" doubleValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="fUK-cx-fJA">
-                                <rect key="frame" x="0.0" y="-7" width="485" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="18" id="eEe-MH-rrs"/>
-                                </constraints>
-                            </progressIndicator>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="j2c-4t-IUE" userLabel="reviewMessage">
+                            <customView id="j2c-4t-IUE" userLabel="reviewMessage">
                                 <rect key="frame" x="0.0" y="0.0" width="485" height="96"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="roS-oI-gpm">
-                                        <rect key="frame" x="84" y="59" width="316" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Select the words and sentences you want to keep" id="iNe-CY-aZc">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lPd-AH-CyF">
-                                        <rect key="frame" x="207" y="23" width="73" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4fs-8c-KcL">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="doneReviewPressed:" target="5gI-5U-AMq" id="1gs-XQ-Buc"/>
-                                        </connections>
-                                    </button>
+                                    <customView id="mDg-lq-z7a" userLabel="messageContent">
+                                        <rect key="frame" x="0.0" y="0.0" width="485" height="96"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="roS-oI-gpm">
+                                                <rect key="frame" x="84" y="59" width="316" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Select the words and sentences you want to keep" id="iNe-CY-aZc">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button verticalHuggingPriority="750" id="lPd-AH-CyF">
+                                                <rect key="frame" x="206" y="23" width="73" height="32"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4fs-8c-KcL">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="doneReviewPressed:" target="5gI-5U-AMq" id="1gs-XQ-Buc"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </customView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="roS-oI-gpm" firstAttribute="top" secondItem="j2c-4t-IUE" secondAttribute="top" constant="20" id="7Ly-WU-nTw"/>
-                                    <constraint firstAttribute="centerX" secondItem="roS-oI-gpm" secondAttribute="centerX" constant="0.5" id="GOt-Yb-8qh"/>
-                                    <constraint firstAttribute="centerX" secondItem="lPd-AH-CyF" secondAttribute="centerX" constant="-1" id="GsV-KR-JI9"/>
-                                    <constraint firstAttribute="bottom" secondItem="lPd-AH-CyF" secondAttribute="bottom" constant="30" id="Tq5-fy-WmV"/>
-                                    <constraint firstAttribute="height" constant="96" id="mAi-2C-1HH"/>
-                                </constraints>
                             </customView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="fUK-cx-fJA" secondAttribute="bottom" constant="-6" id="BWd-v0-dDn"/>
-                            <constraint firstAttribute="bottom" secondItem="j2c-4t-IUE" secondAttribute="bottom" id="HHI-Eu-NUa"/>
-                            <constraint firstAttribute="trailing" secondItem="fUK-cx-fJA" secondAttribute="trailing" id="KAy-01-0cL"/>
-                            <constraint firstAttribute="centerX" secondItem="qnp-E1-2ZC" secondAttribute="centerX" id="QL7-zc-uns"/>
-                            <constraint firstItem="qnp-E1-2ZC" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" constant="32" id="RaT-dY-GzE"/>
-                            <constraint firstAttribute="bottom" secondItem="qnp-E1-2ZC" secondAttribute="bottom" constant="12" id="STx-Zb-MiS"/>
-                            <constraint firstItem="fUK-cx-fJA" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="bup-6n-l7t"/>
-                            <constraint firstAttribute="trailing" secondItem="j2c-4t-IUE" secondAttribute="trailing" id="i80-X8-7GB"/>
-                            <constraint firstItem="j2c-4t-IUE" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="va9-bM-PPb"/>
-                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="editorScrollView" destination="qnp-E1-2ZC" id="3A3-6X-hgF"/>
+                        <outlet property="innerMessage" destination="mDg-lq-z7a" id="zk6-VF-shw"/>
                         <outlet property="mainText" destination="j5u-vD-OFB" id="0M3-Om-LFb"/>
-                        <outlet property="progress" destination="fUK-cx-fJA" id="cE0-g5-0Il"/>
                         <outlet property="reviewMessage" destination="j2c-4t-IUE" id="VHf-jr-rGj"/>
                     </connections>
                 </viewController>
