@@ -19,7 +19,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     var savedText = String()
     var isReviewing = false
     let colors = Colors()
-    var fontSize : CGFloat = 20
+    var fontSize : CGFloat = 16
     @IBOutlet weak var timerContainer: NSView!
     @IBOutlet weak var editorContainer: NSView!
     
@@ -55,7 +55,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         var font = NSFont(name: "Avenir Next", size: fontSize--)
         mainText.font = font
     }
-    
     
     @IBAction func resetDocument(sender:AnyObject){ // Menu item: Start Over
         println("resetDocument")

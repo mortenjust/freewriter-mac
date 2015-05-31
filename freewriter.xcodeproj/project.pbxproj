@@ -146,9 +146,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C8FAC51A1B0F92C000087B5F /* freewriter */ = {
+		C8FAC51A1B0F92C000087B5F /* Freewriter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C8FAC5391B0F92C000087B5F /* Build configuration list for PBXNativeTarget "freewriter" */;
+			buildConfigurationList = C8FAC5391B0F92C000087B5F /* Build configuration list for PBXNativeTarget "Freewriter" */;
 			buildPhases = (
 				08FCC2CC0CF1CA04420A705C /* Check Pods Manifest.lock */,
 				C8FAC5171B0F92C000087B5F /* Sources */,
@@ -160,7 +160,7 @@
 			);
 			dependencies = (
 			);
-			name = freewriter;
+			name = Freewriter;
 			productName = freewriter;
 			productReference = C8FAC51B1B0F92C000087B5F /* freewriter.app */;
 			productType = "com.apple.product-type.application";
@@ -214,7 +214,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C8FAC51A1B0F92C000087B5F /* freewriter */,
+				C8FAC51A1B0F92C000087B5F /* Freewriter */,
 				C8FAC52E1B0F92C000087B5F /* freewriterTests */,
 			);
 		};
@@ -297,7 +297,7 @@
 /* Begin PBXTargetDependency section */
 		C8FAC5311B0F92C000087B5F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C8FAC51A1B0F92C000087B5F /* freewriter */;
+			target = C8FAC51A1B0F92C000087B5F /* Freewriter */;
 			targetProxy = C8FAC5301B0F92C000087B5F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -471,7 +471,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C8FAC5391B0F92C000087B5F /* Build configuration list for PBXNativeTarget "freewriter" */ = {
+		C8FAC5391B0F92C000087B5F /* Build configuration list for PBXNativeTarget "Freewriter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C8FAC53A1B0F92C000087B5F /* Debug */,
