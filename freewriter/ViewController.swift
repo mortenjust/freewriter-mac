@@ -13,9 +13,21 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     @IBOutlet weak var innerMessage: NSView!
     @IBOutlet var mainText: NSTextView!
     let sessionLength:Double = 5 * 60
+    var secondsLeft: Double!
     var progressTimer : NSTimer!
+    var stopWatchTimer : NSTimer!
     var savedText = String()
     var isReviewing = false
+    let colors = Colors()
+    var fontSize : CGFloat = 20
+    @IBOutlet weak var timerContainer: NSView!
+    @IBOutlet weak var editorContainer: NSView!
+    
+    
+    @IBOutlet var mainView: NSVisualEffectView!
+    
+    
+    @IBOutlet weak var stopWatchLabel: NSTextField!
     
     @IBOutlet weak var editorScrollView: NSScrollView!
     
@@ -33,11 +45,32 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         println("save document, aight")
     }
     
+    @IBAction func biggerText(sender:AnyObject){
+        var font = NSFont(name: "Avenir Next", size: fontSize++)
+        mainText.font = font
+    
+    }
+    
+    @IBAction func smallerText(sender:AnyObject){
+        var font = NSFont(name: "Avenir Next", size: fontSize--)
+        mainText.font = font
+    }
+    
+    
+    @IBAction func resetDocument(sender:AnyObject){ // Menu item: Start Over
+        println("resetDocument")
+        savedText = ""
+        mainText.string = ""
+        startReviewMode()
+        startNewSession(first: false)
+    }
+    
     @IBAction func doneReviewPressed(sender: NSButton) {
         println("done pressed")
         startNewSession()
     }
     
+
     func textViewDidChangeSelection(notification: NSNotification) {
         if !isReviewing { return }
         let range = mainText.selectedRange()
@@ -45,16 +78,14 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
             let string = mainText.string!
             let substring = NSString(string: string).substringWithRange(range)
             println(substring)
-//            mainText.textStorage?.applyFontTraits(NSFontTraitMask.BoldFontMask, range: range)
-            mainText.setTextColor(NSColor.whiteColor(), range: range)
-            mainText.setSelectedRange(NSMakeRange(0, 0))
-            savedText = "\(savedText) \(substring)"
+            savedText = "\(savedText) \n- \(substring)"
+            
+            mainText.textStorage?.addAttribute(NSForegroundColorAttributeName, value: colors.selectedText, range: range)
+            mainText.textStorage?.addAttribute(NSBackgroundColorAttributeName, value: colors.selectedBackground, range: range)
         }
     }
     
     func fadeView(view:NSView, toValue:CGFloat){
-        println("fadeView")
-        
         var anim = POPBasicAnimation()
         anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerOpacity) as! POPAnimatableProperty
         anim.toValue = toValue
@@ -64,24 +95,77 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     }
     
     func startProgressBar(){
-        println("startProgressbar")
         
-        var moveAnim = POPBasicAnimation()
-        moveAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
-        moveAnim.toValue = -innerMessage.bounds.height
-        innerMessage.layer?.pop_addAnimation(moveAnim, forKey: "positiony")
+        // fade review message
+        var fadeAnim = POPBasicAnimation.linearAnimation()
+        fadeAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerOpacity) as! POPAnimatableProperty
+        fadeAnim.fromValue = 1
+        fadeAnim.toValue = 0.1
+        fadeAnim.duration = 0.5
+        reviewMessage.layer?.pop_addAnimation(fadeAnim, forKey: "opacity")
         
-        fadeView(reviewMessage, toValue: 0.2)
         
-        var anim = POPBasicAnimation()
-        anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerScaleX) as! POPAnimatableProperty
+        var moveWatch = POPBasicAnimation.linearAnimation()
+        moveWatch.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionX) as! POPAnimatableProperty
+        moveWatch.fromValue = view.bounds.width - timerContainer.bounds.width
+        moveWatch.toValue = 1
+        moveWatch.duration = sessionLength
+        timerContainer.wantsLayer = true
+        timerContainer.layer?.pop_addAnimation(moveWatch, forKey: "movex")
+    }
+    
+    func hideReviewMessage(){
+        var anim = POPSpringAnimation()
+        anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
+        anim.toValue = -reviewMessage.bounds.height
+        anim.completionBlock = {(en, to) -> Void in
+            self.reviewMessage.hidden = true
+        }
+        reviewMessage.layer?.pop_addAnimation(anim, forKey: "move")
+        
+    }
+    
+    
+    func showReviewMessage(){
+        reviewMessage.hidden = false
+        hideTimer()
+        var anim = POPSpringAnimation()
+        anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
         anim.toValue = 0
-        anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        anim.duration = self.sessionLength
-        reviewMessage.layer?.pop_addAnimation(anim, forKey: "scaleX")
+        reviewMessage.layer?.pop_addAnimation(anim, forKey: "position")
+        reviewMessage.becomeFirstResponder()
+        self.view.needsLayout = true
+        fadeView(reviewMessage, toValue: 1)
+        
+        var moveAnim = POPBasicAnimation.easeInAnimation()
+        moveAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
+        moveAnim.toValue = 0
+        moveAnim.beginTime = CACurrentMediaTime() + 0.0
+        self.innerMessage.layer?.pop_addAnimation(moveAnim, forKey: "positiony")
+    }
+
+    func updateStopWatch(){
+        if secondsLeft == nil {
+            secondsLeft = Double(sessionLength+1)
+        }
+        secondsLeft = secondsLeft - 1
+        let seconds = Int(secondsLeft % 60)
+        let minutes = Int((secondsLeft / 60) % 60)
+        stopWatchLabel.stringValue = String(format: "%d:%02d", minutes, seconds)
+        if secondsLeft < 1 {
+        } else  {
+           self.stopWatchTimer =  NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateStopWatch", userInfo: nil, repeats: false)
+            }
     }
     
     func startNewSession(first:Bool=false){
+        zoomEditor(1, backgroundColor: colors.editorBackground)
+        showTimer()
+        hideReviewMessage()
+        secondsLeft = sessionLength
+        if stopWatchTimer != nil { stopWatchTimer.invalidate() }
+        updateStopWatch()
+        secondsLeft = nil
         println("startNewSession")
         if first {
             mainText.becomeFirstResponder()
@@ -89,67 +173,87 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
             progressTimer.invalidate()
         }
         isReviewing = false
-        var normalAtts = [NSForegroundColorAttributeName : NSColor(calibratedRed:0.608, green:0.646, blue:0.696, alpha:1), NSFontAttributeName : NSFont(name: "Helvetica", size: 18)!]
-        var savedAtts = [NSForegroundColorAttributeName : NSColor(calibratedRed:0.608, green:0.646, blue:0.696, alpha:0.5), NSFontAttributeName : NSFont(name: "Helvetica", size: 18)!]
-        var attrString = NSMutableAttributedString(string: savedText, attributes: savedAtts)
+        
+        var normalAtts = [NSForegroundColorAttributeName : colors.textForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
+        var savedAtts = [NSForegroundColorAttributeName : colors.savedTextForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
+        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: savedAtts)
         mainText.textStorage?.setAttributedString(attrString)
         mainText.typingAttributes = normalAtts
         mainText.moveToEndOfDocument(nil)
         mainText.editable = true
         mainText.drawsBackground = true
-        mainText.insertionPointColor = NSColor(deviceRed:1, green:0.933, blue:0.820, alpha:1)
-        var countdownAnimation = POPBasicAnimation()
-        
+        mainText.insertionPointColor = colors.insertionPoint
+
         startProgressBar()
         progressTimer = NSTimer.scheduledTimerWithTimeInterval(sessionLength, target: self, selector: "startReviewMode", userInfo: nil, repeats: true)
+    }
+    
+    func moveTimer(y:CGFloat){
+        var timerAnim = POPSpringAnimation()
+        timerAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
+        timerAnim.toValue = y
+        timerContainer.wantsLayer = true
+        timerContainer.layer?.pop_addAnimation(timerAnim, forKey: "pos")
+    }
+    
+    func hideTimer(){
+        moveTimer(-timerContainer.bounds.height)
+    }
+    
+    func showTimer(){
+        moveTimer(0)
     }
 
     func startReviewMode(){
         println("startReviewMode")
-        reviewMessage.layer?.pop_removeAllAnimations()
-        showReviewMessage()
         progressTimer.invalidate()
         isReviewing = true
         mainText.selectable = true
         mainText.selectionGranularity = NSSelectionGranularity.SelectByWord
         mainText.editable = false
+        
+        reviewMessage.layer?.pop_removeAllAnimations()
+        
+        zoomEditor(1.02, backgroundColor: colors.reviewEditorBackground)
+        showReviewMessage()
     }
     
-    func showReviewMessage(){
-        println("showReviewMessage")
-        reviewMessage.wantsLayer = true
+    func zoomEditor(level : CGFloat, backgroundColor: NSColor){
         var anim = POPSpringAnimation()
-        anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerScaleX) as! POPAnimatableProperty
-        anim.toValue = 1
-        anim.dynamicsFriction = 100
-        anim.springBounciness = 0
-        anim.springSpeed = 0
-        anim.completionBlock = { (anim, done) -> Void in
+        anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerScaleXY) as! POPAnimatableProperty
+        anim.toValue = NSValue(CGSize: CGSizeMake(level, level))
+        anim.completionBlock = {(anim, block) -> Void in
+            var backAnim = POPSpringAnimation()
+            backAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerScaleXY) as! POPAnimatableProperty
+            backAnim.toValue = NSValue(CGSize: CGSizeMake(1,1))
+            self.mainText.layer?.pop_addAnimation(backAnim, forKey: "back")
         }
-        reviewMessage.layer?.pop_addAnimation(anim, forKey: "position")
-        reviewMessage.becomeFirstResponder()
-        self.view.needsLayout = true
-        fadeView(reviewMessage, toValue: 100)
+        editorContainer.wantsLayer = true
+        mainText.wantsLayer = true
+        mainText.drawsBackground = true
+        mainText.layer?.pop_addAnimation(anim, forKey: "size")
         
-        var moveAnim = POPBasicAnimation.easeInAnimation()
-        moveAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
-        moveAnim.toValue = 0
-        moveAnim.beginTime = CACurrentMediaTime() + 0.0
-        self.innerMessage.layer?.pop_addAnimation(moveAnim, forKey: "positiony")
-
-        var mamin = POPBasicAnimation.easeInAnimation()
+        var colorAnim = POPSpringAnimation()
+        colorAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerBackgroundColor) as! POPAnimatableProperty
+        colorAnim.toValue = backgroundColor
+        editorContainer.layer?.pop_addAnimation(colorAnim, forKey: "color")
         
     }
     
     func showInnerMessage(){
-
+        
     }
 
     override func viewDidLoad() {
         self.view.wantsLayer = true
-        self.view.layer?.backgroundColor = NSColor(deviceHue:0.609, saturation:0.812, brightness:0.251, alpha:1).CGColor
         reviewMessage.wantsLayer = true
-        reviewMessage.layer?.backgroundColor = NSColor.whiteColor().CGColor
+        mainView.material = NSVisualEffectMaterial.Dark
+        mainView.state = NSVisualEffectState.Active
+        mainView.blendingMode = NSVisualEffectBlendingMode.BehindWindow
+        hideTimer()
+        
+     //   reviewMessage.layer?.backgroundColor = colors.reviewMessageBackground.CGColor
+        editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
         
         for windowItem in NSApplication.sharedApplication().windows {
             let window = windowItem as! NSWindow
@@ -162,17 +266,24 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         super.viewDidLoad()
         mainText.delegate = self
         startNewSession(first:true)
+        
+        mainText.selectedTextAttributes = [ NSForegroundColorAttributeName : colors.selectedText
+                                          , NSBackgroundColorAttributeName : colors.selectedBackground ]
     }
 
     override func viewDidLayout() {
+        println("layout")
         positionReviewMessageInView()
         positionEditorInView()
-    }
+        timerContainer.frame.origin = CGPointMake(0, 0)
+        editorContainer.frame = view.bounds
 
+    }
     
     func positionReviewMessageInView(){
             reviewMessage.frame.origin.y = 0
             reviewMessage.frame.size.width = self.view.bounds.width
+            println(reviewMessage.frame.size.width)
             let midPoint = reviewMessage.bounds.width/2
             innerMessage.frame.origin.x = midPoint-(innerMessage.bounds.width/2) // center=center, the nsway, omg
     }
@@ -181,7 +292,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         let midPoint = self.view.bounds.width/2
         editorScrollView.frame.origin.x = midPoint - (editorScrollView.bounds.width/2)
         editorScrollView.frame.origin.y = 0 + reviewMessage.bounds.height
-        editorScrollView.frame.size.height = self.view.bounds.height-20-reviewMessage.bounds.height //
+        editorScrollView.frame.size.height = self.view.bounds.height-25-reviewMessage.bounds.height //
         mainText.frame.size.width = editorScrollView.bounds.width-10
     }
     

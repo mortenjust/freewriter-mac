@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6ECEF4D5ECF1B319D77F51F1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41E8A25EFC9D18D200B5AB /* libPods.a */; };
+		C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C754FD1B16A0700021A4F5 /* Colors.swift */; };
 		C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5201B0F92C000087B5F /* AppDelegate.swift */; };
 		C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5221B0F92C000087B5F /* ViewController.swift */; };
 		C8FAC5251B0F92C000087B5F /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5241B0F92C000087B5F /* Document.swift */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		2A1FC5E8D894771AD17E3873 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C8C754FA1B1579940021A4F5 /* freewriter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "freewriter-Bridging-Header.h"; sourceTree = "<group>"; };
+		C8C754FD1B16A0700021A4F5 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = freewriter/Colors.swift; sourceTree = "<group>"; };
 		C8FAC51B1B0F92C000087B5F /* freewriter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freewriter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FAC51F1B0F92C000087B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8FAC5201B0F92C000087B5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 		C8FAC5121B0F92C000087B5F = {
 			isa = PBXGroup;
 			children = (
+				C8C754FD1B16A0700021A4F5 /* Colors.swift */,
 				C8FAC53F1B0FA09100087B5F /* MyPlayground.playground */,
 				C8FAC51D1B0F92C000087B5F /* freewriter */,
 				C8FAC5321B0F92C000087B5F /* freewriterTests */,
@@ -275,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
+				C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */,
 				C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */,
 				C8FAC5251B0F92C000087B5F /* Document.swift in Sources */,
 			);

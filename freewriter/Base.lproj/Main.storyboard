@@ -354,8 +354,16 @@
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="5gT-KC-WSO"/>
-                                                    <menuItem title="Bigger" tag="3" keyEquivalent="+" id="Ptp-SP-VEL"/>
-                                                    <menuItem title="Smaller" tag="4" keyEquivalent="-" id="i1d-Er-qST"/>
+                                                    <menuItem title="Bigger" tag="3" keyEquivalent="+" id="Ptp-SP-VEL">
+                                                        <connections>
+                                                            <action selector="biggerText:" target="Ady-hI-5gd" id="hzk-Ta-E8F"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Smaller" tag="4" keyEquivalent="-" id="i1d-Er-qST">
+                                                        <connections>
+                                                            <action selector="smallerText:" target="Ady-hI-5gd" id="bek-2p-0cO"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem isSeparatorItem="YES" id="kx3-Dk-x3B"/>
                                                     <menuItem title="Kern" id="jBQ-r6-VK2">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -617,6 +625,11 @@
                                                 <action selector="reviseSelected:" target="Ady-hI-5gd" id="8St-dT-6SD"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Start Over" keyEquivalent="O" id="SJ0-1b-ujJ">
+                                            <connections>
+                                                <action selector="resetDocument:" target="Ady-hI-5gd" id="L5A-BB-fi0"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -672,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController storyboardIdentifier="Document Window Controller" id="jGA-0Y-lOj" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ckk-yw-fiv">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ckk-yw-fiv">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -696,61 +709,87 @@
             <objects>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="5gI-5U-AMq" customClass="ViewController" customModule="freewriter" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="ERx-hH-rdd">
+                    <view key="view" id="ERx-hH-rdd" userLabel="MasterView" customClass="NSVisualEffectView">
                         <rect key="frame" x="0.0" y="0.0" width="485" height="374"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="qnp-E1-2ZC">
-                                <rect key="frame" x="0.0" y="95" width="485" height="247"/>
+                            <customView id="xfm-Wf-ldW" userLabel="editorContainer">
+                                <rect key="frame" x="0.0" y="0.0" width="485" height="374"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ujw-0k-Xmw">
-                                    <rect key="frame" x="1" y="1" width="223" height="133"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textView drawsBackground="NO" importsGraphics="NO" findStyle="panel" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" linkDetection="YES" dashSubstitution="YES" smartInsertDelete="YES" id="j5u-vD-OFB">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="334"/>
+                                <subviews>
+                                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="light" id="qnp-E1-2ZC">
+                                        <rect key="frame" x="-174" y="242" width="485" height="247"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ujw-0k-Xmw">
+                                            <rect key="frame" x="0.0" y="0.0" width="485" height="247"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="textColor" white="1" alpha="0.71999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" red="1" green="0.1121158082613799" blue="0.43581648884708113" alpha="0.0" colorSpace="calibratedRGB"/>
-                                            <size key="minSize" width="485" height="247"/>
-                                            <size key="maxSize" width="485" height="10000000"/>
-                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="485" height="247"/>
-                                            <size key="maxSize" width="485" height="10000000"/>
-                                        </textView>
-                                    </subviews>
-                                    <color key="backgroundColor" red="1" green="0.87524796692153028" blue="0.29016978758741774" alpha="1" colorSpace="calibratedRGB"/>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Jcd-ea-f6a">
-                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="f80-Lg-Y1D">
-                                    <rect key="frame" x="224" y="1" width="15" height="133"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                            <customView id="j2c-4t-IUE" userLabel="reviewMessage">
+                                            <subviews>
+                                                <textView drawsBackground="NO" importsGraphics="NO" selectionGranularity="word" findStyle="panel" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" linkDetection="YES" dashSubstitution="YES" smartInsertDelete="YES" id="j5u-vD-OFB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="485" height="247"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" white="1" alpha="0.71999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <size key="minSize" width="485" height="247"/>
+                                                    <size key="maxSize" width="485" height="10000000"/>
+                                                    <color key="insertionPointColor" red="1" green="0.11211580829999999" blue="0.43581648880000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <size key="minSize" width="485" height="247"/>
+                                                    <size key="maxSize" width="485" height="10000000"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="0.87524796692153028" blue="0.29016978758741774" alpha="1" colorSpace="calibratedRGB"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Jcd-ea-f6a">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="f80-Lg-Y1D">
+                                            <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                            </customView>
+                            <customView autoresizesSubviews="NO" canDrawConcurrently="YES" id="1MD-1f-pLE" userLabel="timer">
+                                <rect key="frame" x="0.0" y="0.0" width="85" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ceu-2n-P4e">
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icTimer" id="woF-vC-Ji6"/>
+                                    </imageView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ZeA-sQ-4BI">
+                                        <rect key="frame" x="37" y="9" width="50" height="28"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="5:00" id="n93-c4-2WE">
+                                            <font key="font" size="13" name="AvenirNext-Regular"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="0.66000000000000003" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                            </customView>
+                            <visualEffectView appearanceType="vibrantDark" blendingMode="withinWindow" material="light" state="followsWindowActiveState" id="54c-gJ-ck6" userLabel="reviewMessage">
                                 <rect key="frame" x="0.0" y="0.0" width="485" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <customView id="mDg-lq-z7a" userLabel="messageContent">
+                                    <customView appearanceType="aqua" id="mDg-lq-z7a" userLabel="messageContent">
                                         <rect key="frame" x="0.0" y="0.0" width="485" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="roS-oI-gpm">
-                                                <rect key="frame" x="84" y="59" width="316" height="17"/>
+                                                <rect key="frame" x="84" y="65" width="316" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Select the words and sentences you want to keep" id="iNe-CY-aZc">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" id="lPd-AH-CyF">
-                                                <rect key="frame" x="206" y="23" width="73" height="32"/>
+                                                <rect key="frame" x="184" y="9" width="116" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4fs-8c-KcL">
+                                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="DoneButton" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="4fs-8c-KcL">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -761,18 +800,26 @@
                                         </subviews>
                                     </customView>
                                 </subviews>
-                            </customView>
+                            </visualEffectView>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="editorContainer" destination="xfm-Wf-ldW" id="KJi-91-MsL"/>
                         <outlet property="editorScrollView" destination="qnp-E1-2ZC" id="3A3-6X-hgF"/>
                         <outlet property="innerMessage" destination="mDg-lq-z7a" id="zk6-VF-shw"/>
                         <outlet property="mainText" destination="j5u-vD-OFB" id="0M3-Om-LFb"/>
-                        <outlet property="reviewMessage" destination="j2c-4t-IUE" id="VHf-jr-rGj"/>
+                        <outlet property="mainView" destination="ERx-hH-rdd" id="xzx-3F-VRU"/>
+                        <outlet property="reviewMessage" destination="54c-gJ-ck6" id="AHL-6r-RTj"/>
+                        <outlet property="stopWatchLabel" destination="ZeA-sQ-4BI" id="iLu-cG-hB9"/>
+                        <outlet property="timerContainer" destination="1MD-1f-pLE" id="iyZ-2g-dUi"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="64.5" y="913"/>
+            <point key="canvasLocation" x="75.5" y="917"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="DoneButton" width="99" height="36"/>
+        <image name="icTimer" width="14" height="17"/>
+    </resources>
 </document>
