@@ -54,7 +54,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     @IBAction func smallerText(sender:AnyObject){
         var font = NSFont(name: "Avenir Next", size: fontSize--)
         mainText.font = font
-    }
+    }  
     
     @IBAction func resetDocument(sender:AnyObject){ // Menu item: Start Over
         println("resetDocument")
