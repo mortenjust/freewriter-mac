@@ -3,7 +3,19 @@
 import Cocoa
 
 var str = "Hello, playground"
-var range = NSRange(location: 0,length: 3)
 
-NSString(string: str).substringWithRange(range)
+count(str)
+
+
+log(0.9) * 1000
+
+
+//let speed = abs(-0.0809939503669739)
+
+for speed in 0...1 {
+    let birthRate = abs(log(abs(speed)) * 1000)
+}
+
+
+
 

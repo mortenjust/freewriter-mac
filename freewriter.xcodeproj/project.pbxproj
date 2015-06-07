@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		6ECEF4D5ECF1B319D77F51F1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41E8A25EFC9D18D200B5AB /* libPods.a */; };
+		C8979EBA1B211B3E001DE5EA /* WriteParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C8979EB81B211B3E001DE5EA /* WriteParticle.sks */; };
+		C8979EBB1B211B3E001DE5EA /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = C8979EB91B211B3E001DE5EA /* spark.png */; };
+		C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */; };
+		C8979EC11B216373001DE5EA /* FocusedEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8979EC01B216373001DE5EA /* FocusedEditor.swift */; };
+		C8BF12031B1E088600B750B1 /* MJPOPAnim.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */; };
 		C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C754FD1B16A0700021A4F5 /* Colors.swift */; };
 		C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5201B0F92C000087B5F /* AppDelegate.swift */; };
 		C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5221B0F92C000087B5F /* ViewController.swift */; };
@@ -29,9 +34,15 @@
 
 /* Begin PBXFileReference section */
 		2A1FC5E8D894771AD17E3873 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C8979EB81B211B3E001DE5EA /* WriteParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WriteParticle.sks; sourceTree = "<group>"; };
+		C8979EB91B211B3E001DE5EA /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteEmitterScene.swift; sourceTree = "<group>"; };
+		C8979EC01B216373001DE5EA /* FocusedEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusedEditor.swift; path = ../FocusedEditor.swift; sourceTree = "<group>"; };
+		C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJPOPAnim.swift; path = freewriter/MJPOPAnim.swift; sourceTree = "<group>"; };
+		C8BF12041B1E138300B750B1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		C8C754FA1B1579940021A4F5 /* freewriter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "freewriter-Bridging-Header.h"; sourceTree = "<group>"; };
 		C8C754FD1B16A0700021A4F5 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = freewriter/Colors.swift; sourceTree = "<group>"; };
-		C8FAC51B1B0F92C000087B5F /* freewriter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freewriter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8FAC51B1B0F92C000087B5F /* Freewriter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Freewriter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FAC51F1B0F92C000087B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8FAC5201B0F92C000087B5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8FAC5221B0F92C000087B5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -41,7 +52,6 @@
 		C8FAC52F1B0F92C000087B5F /* freewriterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freewriterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FAC5341B0F92C000087B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8FAC5351B0F92C000087B5F /* freewriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freewriterTests.swift; sourceTree = "<group>"; };
-		C8FAC53F1B0FA09100087B5F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		FC66AD97930FAB15A049D2B0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FF41E8A25EFC9D18D200B5AB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -85,8 +95,9 @@
 		C8FAC5121B0F92C000087B5F = {
 			isa = PBXGroup;
 			children = (
+				C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */,
+				C8BF12041B1E138300B750B1 /* MyPlayground.playground */,
 				C8C754FD1B16A0700021A4F5 /* Colors.swift */,
-				C8FAC53F1B0FA09100087B5F /* MyPlayground.playground */,
 				C8FAC51D1B0F92C000087B5F /* freewriter */,
 				C8FAC5321B0F92C000087B5F /* freewriterTests */,
 				C8FAC51C1B0F92C000087B5F /* Products */,
@@ -98,7 +109,7 @@
 		C8FAC51C1B0F92C000087B5F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C8FAC51B1B0F92C000087B5F /* freewriter.app */,
+				C8FAC51B1B0F92C000087B5F /* Freewriter.app */,
 				C8FAC52F1B0F92C000087B5F /* freewriterTests.xctest */,
 			);
 			name = Products;
@@ -107,8 +118,12 @@
 		C8FAC51D1B0F92C000087B5F /* freewriter */ = {
 			isa = PBXGroup;
 			children = (
+				C8979EC01B216373001DE5EA /* FocusedEditor.swift */,
 				C8FAC5201B0F92C000087B5F /* AppDelegate.swift */,
 				C8FAC5221B0F92C000087B5F /* ViewController.swift */,
+				C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */,
+				C8979EB81B211B3E001DE5EA /* WriteParticle.sks */,
+				C8979EB91B211B3E001DE5EA /* spark.png */,
 				C8FAC5241B0F92C000087B5F /* Document.swift */,
 				C8FAC5261B0F92C000087B5F /* Images.xcassets */,
 				C8FAC5281B0F92C000087B5F /* Main.storyboard */,
@@ -162,7 +177,7 @@
 			);
 			name = Freewriter;
 			productName = freewriter;
-			productReference = C8FAC51B1B0F92C000087B5F /* freewriter.app */;
+			productReference = C8FAC51B1B0F92C000087B5F /* Freewriter.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C8FAC52E1B0F92C000087B5F /* freewriterTests */ = {
@@ -226,6 +241,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8FAC5271B0F92C000087B5F /* Images.xcassets in Resources */,
+				C8979EBB1B211B3E001DE5EA /* spark.png in Resources */,
+				C8979EBA1B211B3E001DE5EA /* WriteParticle.sks in Resources */,
 				C8FAC52A1B0F92C000087B5F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,9 +294,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8BF12031B1E088600B750B1 /* MJPOPAnim.swift in Sources */,
+				C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */,
 				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
 				C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */,
 				C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */,
+				C8979EC11B216373001DE5EA /* FocusedEditor.swift in Sources */,
 				C8FAC5251B0F92C000087B5F /* Document.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

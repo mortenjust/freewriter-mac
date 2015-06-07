@@ -7,30 +7,52 @@
 //
 
 import Cocoa
+import SpriteKit
+import SceneKit
 
-class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate {
+class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate, NSAnimationDelegate {
     @IBOutlet weak var reviewMessage: NSView!
     @IBOutlet weak var innerMessage: NSView!
+    
+    @IBOutlet weak var mainScrollView: NSScrollView!
+    
+    @IBOutlet weak var focusedEditor: FocusedEditor!
+
+    
     @IBOutlet var mainText: NSTextView!
     let sessionLength:Double = 5 * 60
     var secondsLeft: Double!
+    var scene:WriteEmitterScene!
     var progressTimer : NSTimer!
+    var stopTypingTimer : NSTimer!
     var stopWatchTimer : NSTimer!
     var savedText = String()
+    var skView : SKView!
+    var lastKeystroke : Double!
+    var document : Document!
+    var docContents : NSAttributedString = NSAttributedString() {
+        didSet {
+            println("did set, updating document")
+            document.docContents = docContents
+        }
+    }
+    
+    var normalAtts: [String : NSObject]!
+    var savedAtts: [String : NSObject]!
+    
+    enum MJEditMode { case Normal, Focused }
+    var editMode = MJEditMode.Normal
     var isReviewing = false
     let colors = Colors()
-    var fontSize : CGFloat = 16
+    var fontSize : CGFloat = 18
+    var focusedFontSize : CGFloat = 24
+    var sceneView: SCNView!
+    
     @IBOutlet weak var timerContainer: NSView!
     @IBOutlet weak var editorContainer: NSView!
-    
-    
     @IBOutlet var mainView: NSVisualEffectView!
-    
-    
     @IBOutlet weak var stopWatchLabel: NSTextField!
-    
     @IBOutlet weak var editorScrollView: NSScrollView!
-    
     @IBAction func freeWriteSelected(sender:NSMenuItem){
         println("was fw just pressed?")
         startNewSession(first: false)
@@ -39,22 +61,113 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     @IBAction func reviseSelected(sender:NSMenuItem){
         println("was revise")
         startReviewMode()
-    }
-    
-    @IBAction func saveDocument(sender:AnyObject){
-        println("save document, aight")
+
     }
     
     @IBAction func biggerText(sender:AnyObject){
-        var font = NSFont(name: "Avenir Next", size: fontSize++)
-        mainText.font = font
-    
+        // TODO: Check for mode here, focused or not?
+        
+        if editMode == .Normal {
+            let newSize = mainText.font!.pointSize + CGFloat(2)
+            mainText.font = NSFont(name: "Avenir Next", size: newSize)
+        } else {
+            focusedEditor.biggerFont()
+        }
     }
     
     @IBAction func smallerText(sender:AnyObject){
-        var font = NSFont(name: "Avenir Next", size: fontSize--)
-        mainText.font = font
-    }  
+        if editMode == .Normal {
+            let newSize = mainText.font!.pointSize - CGFloat(2)
+            mainText.font = NSFont(name: "Avenir Next", size: newSize)
+        } else {
+            focusedEditor.smallerFont()
+        }
+        
+    }
+
+    override func controlTextDidChange(obj: NSNotification) {
+        focusedEditor.positionInView(view)
+        positionParticles()
+        self.focusedEditor.wantsLayer = true
+        
+        var isAsLongAsWindow = false
+        if (focusedEditor.sizeOfString().width > view.bounds.width) {
+            isAsLongAsWindow = true
+        }
+        
+        if isAsLongAsWindow {
+            if let lastKey = lastKeystroke {
+                let speed = lastKey - NSDate.timeIntervalSinceReferenceDate()
+                lastKeystroke = NSDate.timeIntervalSinceReferenceDate()
+                self.showParticles(speed)
+            } else {
+                lastKeystroke = Double(NSDate.timeIntervalSinceReferenceDate())
+            }
+        }
+
+        let jumpTo = CGRectGetMidY(view.bounds) - (focusedEditor.bounds.height/2)
+        var animUp = MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, easing: MJEasing.easeOut, duration: 0.1, delay: 0, runNow: false, animationName: "positionOut")
+        
+        
+        if let stt = self.stopTypingTimer {
+            self.stopTypingTimer.invalidate()
+            }
+        
+        
+        animUp.completionBlock = {(one, two) -> Void in // start the decay
+            
+           self.stopTypingTimer =  NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "hideParticles", userInfo: nil, repeats: false)
+        
+            MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerPositionY, toValue: 0, easing: MJEasing.easeInOut, duration: 1, delay: 0, animationName: "positionIn")
+            MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerOpacity, toValue: 0.1, easing: MJEasing.easeInOut, duration: 1, delay: 0)
+        }
+        
+        runMJAnim(focusedEditor, animUp, "up")
+        MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.2, delay: 0)
+    }
+    
+    func startParticles(){
+        skView = SKView(frame: self.view.bounds)
+        skView.wantsLayer = true
+        skView.allowsTransparency = true
+        scene = WriteEmitterScene(size: self.view.bounds.size)
+        skView.presentScene(scene)
+        view.addSubview(skView, positioned: NSWindowOrderingMode.Above, relativeTo: focusedEditor)
+    }
+    
+    func hideParticles(){
+        scene.emitter.particleBirthRate = 0
+    }
+    
+    func positionParticles(){
+        skView.frame = self.view.bounds
+    }
+    
+    func showParticles(speed : Double){
+        let birthRate = abs(log(abs(speed)) * 100) /// secret formula for success
+        scene.emitter.particleBirthRate = CGFloat(birthRate)
+
+        println("speed: \(speed), rate: \(birthRate)")
+
+    }
+    
+    func startFocusEditing(){
+        startParticles()
+        hideParticles()
+        editMode = .Focused
+        mainText.hidden = true
+        focusedEditor.setup()
+        focusedEditor.positionInView(view)
+        focusedEditor.hidden = false
+        focusedEditor.delegate = self
+        focusedEditor.becomeFirstResponder()
+        editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
+    }
+    
+    func startNormalEditing(){
+        editMode = .Normal
+    }
+    
     
     @IBAction func resetDocument(sender:AnyObject){ // Menu item: Start Over
         println("resetDocument")
@@ -66,9 +179,15 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     
     @IBAction func doneReviewPressed(sender: NSButton) {
         println("done pressed")
+        focusedEditor.stringValue = " "
         startNewSession()
     }
     
+    func textView(textView: NSTextView, shouldChangeTextInRange affectedCharRange: NSRange, replacementString: String) -> Bool {
+        // This was the best way I could find to bind the document to the form field in a storyboards-based app. Weird, right?
+        document.docContents = mainText.attributedString()
+        return true
+    }
 
     func textViewDidChangeSelection(notification: NSNotification) {
         if !isReviewing { return }
@@ -78,7 +197,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
             let substring = NSString(string: string).substringWithRange(range)
             println(substring)
             savedText = "\(savedText) \n- \(substring)"
-            
             mainText.textStorage?.addAttribute(NSForegroundColorAttributeName, value: colors.selectedText, range: range)
             mainText.textStorage?.addAttribute(NSBackgroundColorAttributeName, value: colors.selectedBackground, range: range)
         }
@@ -102,6 +220,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         fadeAnim.toValue = 0.1
         fadeAnim.duration = 0.5
         reviewMessage.layer?.pop_addAnimation(fadeAnim, forKey: "opacity")
+        
         
         
         var moveWatch = POPBasicAnimation.linearAnimation()
@@ -143,29 +262,10 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         self.innerMessage.layer?.pop_addAnimation(moveAnim, forKey: "positiony")
     }
 
-    func updateStopWatch(){
-        if secondsLeft == nil {
-            secondsLeft = Double(sessionLength+1)
-        }
-        secondsLeft = secondsLeft - 1
-        let seconds = Int(secondsLeft % 60)
-        let minutes = Int((secondsLeft / 60) % 60)
-        stopWatchLabel.stringValue = String(format: "%d:%02d", minutes, seconds)
-        if secondsLeft < 1 {
-        } else  {
-           self.stopWatchTimer =  NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateStopWatch", userInfo: nil, repeats: false)
-            }
-    }
+
     
-    func startNewSession(first:Bool=false){
+    func startNormalSession(first:Bool=false){
         zoomEditor(1, backgroundColor: colors.editorBackground)
-        showTimer()
-        hideReviewMessage()
-        secondsLeft = sessionLength
-        if stopWatchTimer != nil { stopWatchTimer.invalidate() }
-        updateStopWatch()
-        secondsLeft = nil
-        println("startNewSession")
         if first {
             mainText.becomeFirstResponder()
         } else {
@@ -173,8 +273,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         }
         isReviewing = false
         
-        var normalAtts = [NSForegroundColorAttributeName : colors.textForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
-        var savedAtts = [NSForegroundColorAttributeName : colors.savedTextForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
+        mainText.hidden = false
         var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: savedAtts)
         mainText.textStorage?.setAttributedString(attrString)
         mainText.typingAttributes = normalAtts
@@ -182,9 +281,24 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         mainText.editable = true
         mainText.drawsBackground = true
         mainText.insertionPointColor = colors.insertionPoint
-
+    }
+    
+    func startNewSession(first:Bool=false){
+        showTimer()
+        hideReviewMessage()
+        secondsLeft = sessionLength
+        if stopWatchTimer != nil { stopWatchTimer.invalidate() }
+        updateStopWatch()
+        secondsLeft = nil
+        println("startNewSession")
         startProgressBar()
         progressTimer = NSTimer.scheduledTimerWithTimeInterval(sessionLength, target: self, selector: "startReviewMode", userInfo: nil, repeats: true)
+
+        if self.editMode == MJEditMode.Normal {
+            startNormalSession(first: first)
+        } else {
+            startFocusEditing()
+        }
     }
     
     func moveTimer(y:CGFloat){
@@ -205,15 +319,30 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
 
     func startReviewMode(){
         println("startReviewMode")
-        progressTimer.invalidate()
-        isReviewing = true
+        
+        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: savedAtts)
+        mainText.textStorage?.setAttributedString(attrString)
+        
+        if editMode == .Focused {
+            focusedEditor.hidden = true
+            mainText.hidden = false
+            skView.hidden = true
+            mainText.string! += "\n\(focusedEditor.stringValue)\n"
+        }
+        
+        mainText.selectedRanges = [NSMakeRange(0, 0)]
+        
         mainText.selectable = true
         mainText.selectionGranularity = NSSelectionGranularity.SelectByWord
         mainText.editable = false
         
+        progressTimer.invalidate()
+        isReviewing = true
         reviewMessage.layer?.pop_removeAllAnimations()
-        
         zoomEditor(1.02, backgroundColor: colors.reviewEditorBackground)
+        
+        mainText.moveToEndOfDocument(nil)
+
         showReviewMessage()
     }
     
@@ -242,13 +371,28 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
     func showInnerMessage(){
         
     }
+    
+    override func viewWillAppear() {
+        let win = self.view.window
+        let winc = win?.windowController() as! NSWindowController
+        document = winc.document as! Document
+
+    }
 
     override func viewDidLoad() {
+        normalAtts = [NSForegroundColorAttributeName : colors.textForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
+        savedAtts = [NSForegroundColorAttributeName : colors.savedTextForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
+        
+        
         self.view.wantsLayer = true
         reviewMessage.wantsLayer = true
+        mainScrollView.scrollerStyle = NSScrollerStyle.Overlay
+        mainScrollView.scrollerKnobStyle = NSScrollerKnobStyle.Light
+        
         mainView.material = NSVisualEffectMaterial.Dark
         mainView.state = NSVisualEffectState.Active
         mainView.blendingMode = NSVisualEffectBlendingMode.BehindWindow
+
         hideTimer()
         
      //   reviewMessage.layer?.backgroundColor = colors.reviewMessageBackground.CGColor
@@ -264,10 +408,15 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         }
         super.viewDidLoad()
         mainText.delegate = self
+        
+        self.editMode = .Focused
+        
+        mainText.hidden = true
         startNewSession(first:true)
         
         mainText.selectedTextAttributes = [ NSForegroundColorAttributeName : colors.selectedText
                                           , NSBackgroundColorAttributeName : colors.selectedBackground ]
+     
     }
 
     override func viewDidLayout() {
@@ -293,6 +442,20 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate 
         editorScrollView.frame.origin.y = 0 + reviewMessage.bounds.height
         editorScrollView.frame.size.height = self.view.bounds.height-25-reviewMessage.bounds.height //
         mainText.frame.size.width = editorScrollView.bounds.width-10
+    }
+    
+    func updateStopWatch(){
+        if secondsLeft == nil {
+            secondsLeft = Double(sessionLength+1)
+        }
+        secondsLeft = secondsLeft - 1
+        let seconds = Int(secondsLeft % 60)
+        let minutes = Int((secondsLeft / 60) % 60)
+        stopWatchLabel.stringValue = String(format: "%d:%02d", minutes, seconds)
+        if secondsLeft < 1 {
+        } else  {
+            self.stopWatchTimer =  NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateStopWatch", userInfo: nil, repeats: false)
+        }
     }
     
     override var representedObject: AnyObject? {

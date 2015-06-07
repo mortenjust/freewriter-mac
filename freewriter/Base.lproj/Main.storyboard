@@ -54,30 +54,63 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="File" id="dMs-cI-mzQ">
+                            <menuItem title="File" id="f3N-uL-W1U">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="File" id="bib-Uj-vzu">
+                                <menu key="submenu" title="File" id="ru5-Dn-x0t">
                                     <items>
-                                        <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
+                                        <menuItem title="New" keyEquivalent="n" id="Ayt-YM-HuU">
                                             <connections>
-                                                <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
+                                                <action selector="newDocument:" target="Ady-hI-5gd" id="N53-GJ-0U5"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
+                                        <menuItem title="Open…" keyEquivalent="o" id="LtG-lH-rE3">
                                             <connections>
-                                                <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
+                                                <action selector="openDocument:" target="Ady-hI-5gd" id="jyS-vg-Vm4"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                                        <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                        <menuItem title="Open Recent" id="qkG-TQ-LEq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="enY-j1-XcP">
+                                                <items>
+                                                    <menuItem title="Clear Menu" id="hxN-he-GX9">
+                                                        <connections>
+                                                            <action selector="clearRecentDocuments:" target="Ady-hI-5gd" id="8XF-LM-DqL"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="C5A-Ra-skD"/>
+                                        <menuItem title="Close" keyEquivalent="w" id="M5z-Qu-jkF">
                                             <connections>
-                                                <action selector="runPageLayout:" target="Ady-hI-5gd" id="Din-rz-gC5"/>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="eAN-Kj-qLp"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
+                                        <menuItem title="Save" keyEquivalent="s" id="mul-1Q-zGV">
                                             <connections>
-                                                <action selector="print:" target="Ady-hI-5gd" id="qaZ-4w-aoO"/>
+                                                <action selector="saveDocument:" target="Ady-hI-5gd" id="GDU-CO-9vG"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Save As…" keyEquivalent="S" id="3Md-yp-FbF">
+                                            <connections>
+                                                <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="5Ii-xe-o5Q"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Revert to Saved" id="0MY-0u-D5X">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="sRC-lA-bky"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="x2z-My-Kn8"/>
+                                        <menuItem title="Page Setup…" keyEquivalent="P" id="2JY-Ht-r0D">
+                                            <connections>
+                                                <action selector="runPageLayout:" target="Ady-hI-5gd" id="6dP-YK-Qbf"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Print…" keyEquivalent="p" id="5B1-ZA-Mdw">
+                                            <connections>
+                                                <action selector="print:" target="Ady-hI-5gd" id="TVe-9z-QrD"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -437,7 +470,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="485" height="374"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="light" id="qnp-E1-2ZC">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="light" id="qnp-E1-2ZC">
                                         <rect key="frame" x="-174" y="242" width="485" height="247"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ujw-0k-Xmw">
@@ -462,11 +495,20 @@
                                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="f80-Lg-Y1D">
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="f80-Lg-Y1D">
                                             <rect key="frame" x="224" y="1" width="15" height="133"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
+                                    <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" id="7KS-1e-6cK" customClass="FocusedEditor" customModule="Freewriter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="170" width="474" height="88"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="focused Editor" id="Mdq-n4-yRc">
+                                            <font key="font" size="44" name="AvenirNext-Regular"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                             </customView>
                             <customView autoresizesSubviews="NO" canDrawConcurrently="YES" id="1MD-1f-pLE" userLabel="timer">
@@ -526,7 +568,9 @@
                     <connections>
                         <outlet property="editorContainer" destination="xfm-Wf-ldW" id="KJi-91-MsL"/>
                         <outlet property="editorScrollView" destination="qnp-E1-2ZC" id="3A3-6X-hgF"/>
+                        <outlet property="focusedEditor" destination="7KS-1e-6cK" id="f0Y-EP-ago"/>
                         <outlet property="innerMessage" destination="mDg-lq-z7a" id="zk6-VF-shw"/>
+                        <outlet property="mainScrollView" destination="qnp-E1-2ZC" id="BhK-2B-S4u"/>
                         <outlet property="mainText" destination="j5u-vD-OFB" id="0M3-Om-LFb"/>
                         <outlet property="mainView" destination="ERx-hH-rdd" id="xzx-3F-VRU"/>
                         <outlet property="reviewMessage" destination="54c-gJ-ck6" id="AHL-6r-RTj"/>
@@ -534,6 +578,8 @@
                         <outlet property="timerContainer" destination="1MD-1f-pLE" id="iyZ-2g-dUi"/>
                     </connections>
                 </viewController>
+                <customObject id="j1V-Dy-lxe" customClass="Document" customModule="Freewriter" customModuleProvider="target"/>
+                <userDefaultsController representsSharedInstance="YES" id="Yic-9f-c0f"/>
             </objects>
             <point key="canvasLocation" x="75.5" y="917"/>
         </scene>
