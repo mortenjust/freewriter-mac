@@ -102,28 +102,41 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
                 lastKeystroke = Double(NSDate.timeIntervalSinceReferenceDate())
             }
         }
-
-        let jumpTo = CGRectGetMidY(view.bounds) - (focusedEditor.bounds.height/2)
-//        var animUp = MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, easing: MJEasing.easeOut, duration: 0.1, delay: 0, runNow: false, animationName: "positionOut")
         
-//        var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 16.3, dynamicsFriction: 1.6, dynamicsMass: 0.15, animationName: "jumpUpWhenWriting", runNow: true)
+        // TODO: check if this animation is already running. If it is, don't disturb
 
-        var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 71.6, dynamicsFriction: 8.7, dynamicsMass: 2.4, animationName: "jumpUpWhenWriting", runNow: true)
-
-        
         if let stt = self.stopTypingTimer {
             self.stopTypingTimer.invalidate()
-            }
-        
-        animUp.completionBlock = {(one, two) -> Void in // start the decay
-            
-           self.stopTypingTimer =  NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "hideParticles", userInfo: nil, repeats: false)
- 
-            MJPOPSpring(view: self.focusedEditor, propertyName: kPOPLayerPositionY, toValue: 20, delay:0.3, repeatForever: false, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 19.9, dynamicsFriction: 20, dynamicsMass: 16.6, animationName: "animateTextDown", runNow: true)
-            MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerOpacity, toValue: 0.16, easing: MJEasing.easeInOut, duration: 1, delay: 0.3)
         }
         
-        runMJAnim(focusedEditor, animUp, "up")
+        
+        println("animation for key: ")
+        println(focusedEditor.layer?.pop_animationForKey("MoveUpOnType"))
+        
+        if (focusedEditor.layer?.pop_animationForKey("MoveUpOnType") != nil){
+            /// do nothing
+            println("already moving up, so doing nothing")
+        } else {
+            println("not moving up, so moving up")
+            let jumpTo = CGRectGetMidY(view.bounds) - (focusedEditor.bounds.height/2)
+            var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 71.6, dynamicsFriction: 8.7, dynamicsMass: 2.4, animationName: "jumpUpWhenWriting", runNow: true)
+            animUp.removedOnCompletion = true
+            animUp.completionBlock = {(one, two) -> Void in // start the decay
+                
+                self.focusedEditor.layer?.pop_removeAllAnimations()
+                
+               // hide particles after 0.2 secs
+               self.stopTypingTimer =  NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "hideParticles", userInfo: nil, repeats: false)
+                
+                // begin falling down and lower transparency
+                MJPOPSpring(view: self.focusedEditor, propertyName: kPOPLayerPositionY, toValue: 20, delay:0.1, repeatForever: false, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 19.9, dynamicsFriction: 20, dynamicsMass: 16.6, animationName: "animateTextDown", runNow: true)
+                MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerOpacity, toValue: 0.16, easing: MJEasing.easeInOut, duration: 1, delay: 0.1)
+            }
+            
+            runMJAnim(focusedEditor, animUp, "MoveUpOnType")
+            }
+        
+        
         MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.2, delay: 0)
     }
     
