@@ -36,6 +36,8 @@ struct Colors {
     let selectedText = NSColor.blackColor()
     let selectedBackground = NSColor.whiteColor()
     
+    let emitterPointFromMaxY:CGFloat = 50
+    
     let mainFont = "Avenir Next"
     
 }

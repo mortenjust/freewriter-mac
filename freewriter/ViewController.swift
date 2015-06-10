@@ -86,8 +86,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
 
     override func controlTextDidChange(obj: NSNotification) {
-        focusedEditor.positionInView(view)
-        positionParticles()
         self.focusedEditor.wantsLayer = true
         
         var isAsLongAsWindow = false
@@ -106,20 +104,23 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         }
 
         let jumpTo = CGRectGetMidY(view.bounds) - (focusedEditor.bounds.height/2)
-        var animUp = MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, easing: MJEasing.easeOut, duration: 0.1, delay: 0, runNow: false, animationName: "positionOut")
+//        var animUp = MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, easing: MJEasing.easeOut, duration: 0.1, delay: 0, runNow: false, animationName: "positionOut")
         
+//        var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 16.3, dynamicsFriction: 1.6, dynamicsMass: 0.15, animationName: "jumpUpWhenWriting", runNow: true)
+
+        var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 71.6, dynamicsFriction: 8.7, dynamicsMass: 2.4, animationName: "jumpUpWhenWriting", runNow: true)
+
         
         if let stt = self.stopTypingTimer {
             self.stopTypingTimer.invalidate()
             }
         
-        
         animUp.completionBlock = {(one, two) -> Void in // start the decay
             
-           self.stopTypingTimer =  NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "hideParticles", userInfo: nil, repeats: false)
-        
-            MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerPositionY, toValue: 0, easing: MJEasing.easeInOut, duration: 1, delay: 0, animationName: "positionIn")
-            MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerOpacity, toValue: 0.1, easing: MJEasing.easeInOut, duration: 1, delay: 0)
+           self.stopTypingTimer =  NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "hideParticles", userInfo: nil, repeats: false)
+ 
+            MJPOPSpring(view: self.focusedEditor, propertyName: kPOPLayerPositionY, toValue: 20, delay:0.3, repeatForever: false, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 19.9, dynamicsFriction: 20, dynamicsMass: 16.6, animationName: "animateTextDown", runNow: true)
+            MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerOpacity, toValue: 0.16, easing: MJEasing.easeInOut, duration: 1, delay: 0.3)
         }
         
         runMJAnim(focusedEditor, animUp, "up")
@@ -146,9 +147,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     func showParticles(speed : Double){
         let birthRate = abs(log(abs(speed)) * 100) /// secret formula for success
         scene.emitter.particleBirthRate = CGFloat(birthRate)
-
-        println("speed: \(speed), rate: \(birthRate)")
-
     }
     
     func startFocusEditing(){
@@ -167,7 +165,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     func startNormalEditing(){
         editMode = .Normal
     }
-    
     
     @IBAction func resetDocument(sender:AnyObject){ // Menu item: Start Over
         println("resetDocument")
@@ -420,11 +417,15 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
 
     override func viewDidLayout() {
+        focusedEditor.positionInView(view)
+        positionParticles()
+
         println("layout")
         positionReviewMessageInView()
         positionEditorInView()
         timerContainer.frame.origin = CGPointMake(0, 0)
         editorContainer.frame = view.bounds
+        scene.repositionInView(self.view)
 
     }
     

@@ -442,9 +442,9 @@
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="411"/>
+                        <rect key="contentRect" x="196" y="240" width="550" height="500"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="485" height="411"/>
+                        <value key="minSize" type="size" width="550" height="500"/>
                         <connections>
                             <binding destination="jGA-0Y-lOj" name="representedFilename" keyPath="self.window" id="zIx-7Q-TWd"/>
                         </connections>
@@ -463,11 +463,11 @@
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController id="5gI-5U-AMq" customClass="ViewController" customModule="Freewriter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ERx-hH-rdd" userLabel="MasterView" customClass="NSVisualEffectView">
-                        <rect key="frame" x="0.0" y="0.0" width="485" height="374"/>
+                        <rect key="frame" x="0.0" y="0.0" width="550" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView id="xfm-Wf-ldW" userLabel="editorContainer">
-                                <rect key="frame" x="0.0" y="0.0" width="485" height="374"/>
+                                <rect key="frame" x="0.0" y="126" width="485" height="374"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" scrollerKnobStyle="light" id="qnp-E1-2ZC">
@@ -503,7 +503,7 @@
                                     <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" id="7KS-1e-6cK" customClass="FocusedEditor" customModule="Freewriter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="170" width="474" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="focused Editor" id="Mdq-n4-yRc">
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="Write now" id="Mdq-n4-yRc">
                                             <font key="font" size="44" name="AvenirNext-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
@@ -512,7 +512,7 @@
                                 </subviews>
                             </customView>
                             <customView autoresizesSubviews="NO" canDrawConcurrently="YES" id="1MD-1f-pLE" userLabel="timer">
-                                <rect key="frame" x="0.0" y="0.0" width="85" height="48"/>
+                                <rect key="frame" x="0.0" y="126" width="85" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ceu-2n-P4e">
@@ -532,7 +532,7 @@
                                 </subviews>
                             </customView>
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="light" state="followsWindowActiveState" id="54c-gJ-ck6" userLabel="reviewMessage">
-                                <rect key="frame" x="0.0" y="0.0" width="485" height="96"/>
+                                <rect key="frame" x="0.0" y="126" width="485" height="96"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <customView appearanceType="aqua" id="mDg-lq-z7a" userLabel="messageContent">
@@ -581,7 +581,7 @@
                 <customObject id="j1V-Dy-lxe" customClass="Document" customModule="Freewriter" customModuleProvider="target"/>
                 <userDefaultsController representsSharedInstance="YES" id="Yic-9f-c0f"/>
             </objects>
-            <point key="canvasLocation" x="75.5" y="917"/>
+            <point key="canvasLocation" x="75" y="917"/>
         </scene>
     </scenes>
     <resources>

@@ -25,10 +25,16 @@ class WriteEmitterScene: SKScene {
         let midX = CGRectGetMidX(self.frame)
         let midY = CGRectGetMidY(self.frame)
         let maxX = CGRectGetMaxX(self.frame)
-        
-        emitter.position = CGPointMake(maxX, midY)
-        
+        emitter.position = CGPointMake(maxX-Colors().emitterPointFromMaxY, midY)
+
         self.addChild(emitter)
+    }
+    
+    func repositionInView(view:NSView){
+        let midX = CGRectGetMidX(self.frame)
+        let midY = CGRectGetMidY(self.frame)
+        let maxX = CGRectGetMaxX(self.frame)
+        emitter.position = CGPointMake(maxX-Colors().emitterPointFromMaxY, midY)
     }
     
     

@@ -69,6 +69,7 @@ class MJPOPSpring: POPSpringAnimation {
         toValue _toValue : AnyObject? = nil,
             repeatForever _repeatForever:Bool? = nil,
             repeatCount _repeatCount: Int? = nil,
+            delay _delay : CFTimeInterval? = nil,
             springBounciness _springBounciness: CGFloat? = nil,
             springSpeed _springSpeed : CGFloat? = nil,
             dynamicsTension _dynamicsTension: CGFloat? = nil,
@@ -91,6 +92,9 @@ class MJPOPSpring: POPSpringAnimation {
             self.dynamicsTension = _dynamicsTension != nil ? _dynamicsTension! : self.dynamicsTension
             self.dynamicsFriction = _dynamicsFriction != nil ? _dynamicsFriction! : self.dynamicsFriction
             self.dynamicsMass = _dynamicsMass != nil ? _dynamicsMass! : self.dynamicsMass
+            if _delay != nil {
+                self.beginTime = CACurrentMediaTime() + _delay!
+            }
             
             if !view.wantsLayer { view.wantsLayer = true }
             

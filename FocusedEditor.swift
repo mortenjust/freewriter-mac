@@ -43,7 +43,7 @@ class FocusedEditor: NSTextField {
     
     func positionInView(view:NSView){
         println("pos in v. Own height is \(heightOfString())")
-        self.frame.size.width = view.bounds.width
+        self.frame.size.width = view.bounds.width-Colors().emitterPointFromMaxY
         self.frame.size.height = heightOfString()
         self.frame.origin.y = CGRectGetMidY(view.bounds) - (heightOfString()/2)
     }
