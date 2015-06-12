@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6ECEF4D5ECF1B319D77F51F1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41E8A25EFC9D18D200B5AB /* libPods.a */; };
+		C86C66D21B293C9D0029F57E /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D01B293C9D0029F57E /* bokeh.png */; };
+		C86C66D51B293EDC0029F57E /* SimpleParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D31B293EDC0029F57E /* SimpleParticle.sks */; };
+		C86C66D61B293EDC0029F57E /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D41B293EDC0029F57E /* spark.png */; };
 		C8979EBA1B211B3E001DE5EA /* WriteParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C8979EB81B211B3E001DE5EA /* WriteParticle.sks */; };
-		C8979EBB1B211B3E001DE5EA /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = C8979EB91B211B3E001DE5EA /* spark.png */; };
 		C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */; };
 		C8979EC11B216373001DE5EA /* FocusedEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8979EC01B216373001DE5EA /* FocusedEditor.swift */; };
 		C8BF12031B1E088600B750B1 /* MJPOPAnim.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */; };
@@ -34,8 +36,10 @@
 
 /* Begin PBXFileReference section */
 		2A1FC5E8D894771AD17E3873 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C86C66D01B293C9D0029F57E /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
+		C86C66D31B293EDC0029F57E /* SimpleParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SimpleParticle.sks; sourceTree = "<group>"; };
+		C86C66D41B293EDC0029F57E /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		C8979EB81B211B3E001DE5EA /* WriteParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WriteParticle.sks; sourceTree = "<group>"; };
-		C8979EB91B211B3E001DE5EA /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteEmitterScene.swift; sourceTree = "<group>"; };
 		C8979EC01B216373001DE5EA /* FocusedEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusedEditor.swift; path = ../FocusedEditor.swift; sourceTree = "<group>"; };
 		C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MJPOPAnim.swift; path = freewriter/MJPOPAnim.swift; sourceTree = "<group>"; };
@@ -119,11 +123,13 @@
 			isa = PBXGroup;
 			children = (
 				C8979EC01B216373001DE5EA /* FocusedEditor.swift */,
+				C86C66D01B293C9D0029F57E /* bokeh.png */,
 				C8FAC5201B0F92C000087B5F /* AppDelegate.swift */,
 				C8FAC5221B0F92C000087B5F /* ViewController.swift */,
+				C86C66D31B293EDC0029F57E /* SimpleParticle.sks */,
+				C86C66D41B293EDC0029F57E /* spark.png */,
 				C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */,
 				C8979EB81B211B3E001DE5EA /* WriteParticle.sks */,
-				C8979EB91B211B3E001DE5EA /* spark.png */,
 				C8FAC5241B0F92C000087B5F /* Document.swift */,
 				C8FAC5261B0F92C000087B5F /* Images.xcassets */,
 				C8FAC5281B0F92C000087B5F /* Main.storyboard */,
@@ -241,9 +247,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8FAC5271B0F92C000087B5F /* Images.xcassets in Resources */,
-				C8979EBB1B211B3E001DE5EA /* spark.png in Resources */,
+				C86C66D61B293EDC0029F57E /* spark.png in Resources */,
 				C8979EBA1B211B3E001DE5EA /* WriteParticle.sks in Resources */,
 				C8FAC52A1B0F92C000087B5F /* Main.storyboard in Resources */,
+				C86C66D21B293C9D0029F57E /* bokeh.png in Resources */,
+				C86C66D51B293EDC0029F57E /* SimpleParticle.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

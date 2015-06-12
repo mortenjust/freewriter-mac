@@ -16,7 +16,7 @@ class WriteEmitterScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
-        var emitterPath = NSBundle.mainBundle().pathForResource("WriteParticle", ofType: "sks")
+        var emitterPath = NSBundle.mainBundle().pathForResource("SimpleParticle", ofType: "sks")
         emitter = NSKeyedUnarchiver.unarchiveObjectWithFile(emitterPath!) as! SKEmitterNode
 
         scaleMode = .AspectFill

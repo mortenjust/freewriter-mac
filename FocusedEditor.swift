@@ -10,6 +10,8 @@ import Cocoa
 
 class FocusedEditor: NSTextField {
     
+    var backspacePressed = true
+    
     func setup(){
         self.backgroundColor = NSColor.clearColor()
         self.bordered = false
@@ -39,7 +41,6 @@ class FocusedEditor: NSTextField {
         let size:NSSize = NSString(string: self.stringValue).sizeWithAttributes(atts)
         return size
     }
-
     
     func positionInView(view:NSView){
         println("pos in v. Own height is \(heightOfString())")
@@ -47,7 +48,60 @@ class FocusedEditor: NSTextField {
         self.frame.size.height = heightOfString()
         self.frame.origin.y = CGRectGetMidY(view.bounds) - (heightOfString()/2)
     }
-
+    
+    override func insertBacktab(sender: AnyObject?) {
+        return
+    }
+    
+    override func insertLineBreak(sender: AnyObject?) {
+        return
+    }
+    
+    override func insertNewline(sender: AnyObject?) {
+        return
+    }
+    
+    override func insertNewlineIgnoringFieldEditor(sender: AnyObject?) {
+        return
+    }
+    
+    override func insertTab(sender: AnyObject?) {
+        return
+    }
+    
+    override func insertTabIgnoringFieldEditor(sender: AnyObject?) {
+        return
+    }
+    
+    override func moveBackward(sender: AnyObject?) {
+        return
+    }
+    
+    override func moveDown(sender: AnyObject?) {
+        return
+    }
+    
+    override func moveLeft(sender: AnyObject?) {
+        return
+    }
+    
+    override func moveLeftAndModifySelection(sender: AnyObject?) {
+        return
+    }
+    
+    override func moveToBeginningOfLine(sender: AnyObject?) {
+        return
+    }
+    
+    
+    
+    override func deleteBackward(sender: AnyObject?) {
+        super.deleteBackward(sender)
+        backspacePressed = true
+        println("backspace, setting flag")
+        return
+    }
+    
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
 

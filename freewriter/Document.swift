@@ -9,8 +9,9 @@
 import Cocoa
 
 class Document: NSDocument {
-    @IBOutlet weak var docContents = NSAttributedString()
+    @IBOutlet weak var docContents = NSString()
     var mainText : NSTextView!
+    
     
     override init() {
         super.init()
@@ -19,6 +20,7 @@ class Document: NSDocument {
 
     override func windowControllerDidLoadNib(aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
+        
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
@@ -40,7 +42,7 @@ class Document: NSDocument {
         println("dataoftype, and this is contents: ")
         println(docContents)
         outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return nil
+        return docContents?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
     }
 
     override func readFromData(data: NSData, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
@@ -48,7 +50,14 @@ class Document: NSDocument {
         // You can also choose to override readFromFileWrapper:ofType:error: or readFromURL:ofType:error: instead.
         // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
         outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return false
+        
+        if data.length > 0 {
+            println("got data, writing to doccontents")
+            self.docContents = NSString(data: data, encoding: NSUTF8StringEncoding)
+        }
+        
+        
+        return true
     }
 
 

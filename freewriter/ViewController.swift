@@ -25,12 +25,13 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     var scene:WriteEmitterScene!
     var progressTimer : NSTimer!
     var stopTypingTimer : NSTimer!
+    var didPressBackspace = false
     var stopWatchTimer : NSTimer!
     var savedText = String()
     var skView : SKView!
     var lastKeystroke : Double!
     var document : Document!
-    var docContents : NSAttributedString = NSAttributedString() {
+    var docContents : NSString = NSString() {
         didSet {
             println("did set, updating document")
             document.docContents = docContents
@@ -69,7 +70,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         
         if editMode == .Normal {
             let newSize = mainText.font!.pointSize + CGFloat(2)
-            mainText.font = NSFont(name: "Avenir Next", size: newSize)
+            mainText.font = NSFont(name: colors.mainFont, size: newSize)
         } else {
             focusedEditor.biggerFont()
         }
@@ -78,46 +79,45 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     @IBAction func smallerText(sender:AnyObject){
         if editMode == .Normal {
             let newSize = mainText.font!.pointSize - CGFloat(2)
-            mainText.font = NSFont(name: "Avenir Next", size: newSize)
+            mainText.font = NSFont(name: colors.mainFont, size: newSize)
         } else {
             focusedEditor.smallerFont()
         }
-        
     }
+    
+    func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
+        
+        if commandSelector == Selector("insertLineBreak:") ||
+            commandSelector == Selector("insertNewline:") ||
+            commandSelector == Selector("insertTab:") ||
+            commandSelector == Selector("moveBackward:") ||
+            commandSelector == Selector("moveDown:") ||
+            commandSelector == Selector("moveForward:") ||
+            commandSelector == Selector("moveLeft:") ||
+            commandSelector == Selector("moveRight:") ||
+            commandSelector == Selector("pageDown:") ||
+            commandSelector == Selector("pageUp:") ||
+            commandSelector == Selector("selectWord:") {
+                return true
+        }
 
+        if commandSelector == Selector("deleteBackward:") ||
+            commandSelector == Selector("deleteWordBackward:") {
+            focusedEditor.backspacePressed = true
+        }
+        return false
+    }
+    
     override func controlTextDidChange(obj: NSNotification) {
         self.focusedEditor.wantsLayer = true
-        
-        var isAsLongAsWindow = false
-        if (focusedEditor.sizeOfString().width > view.bounds.width) {
-            isAsLongAsWindow = true
-        }
-        
-        if isAsLongAsWindow {
-            if let lastKey = lastKeystroke {
-                let speed = lastKey - NSDate.timeIntervalSinceReferenceDate()
-                lastKeystroke = NSDate.timeIntervalSinceReferenceDate()
-                self.showParticles(speed)
-            } else {
-                lastKeystroke = Double(NSDate.timeIntervalSinceReferenceDate())
-            }
-        }
-        
-        // TODO: check if this animation is already running. If it is, don't disturb
 
         if let stt = self.stopTypingTimer {
             self.stopTypingTimer.invalidate()
         }
         
-        
-        println("animation for key: ")
-        println(focusedEditor.layer?.pop_animationForKey("MoveUpOnType"))
-        
-        if (focusedEditor.layer?.pop_animationForKey("MoveUpOnType") != nil){
-            /// do nothing
-            println("already moving up, so doing nothing")
+        // is layer already moving, or was the most recent keystroke a backspace?
+        if (focusedEditor.layer?.pop_animationForKey("MoveUpOnType") != nil || focusedEditor.backspacePressed == true){
         } else {
-            println("not moving up, so moving up")
             let jumpTo = CGRectGetMidY(view.bounds) - (focusedEditor.bounds.height/2)
             var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 71.6, dynamicsFriction: 8.7, dynamicsMass: 2.4, animationName: "jumpUpWhenWriting", runNow: true)
             animUp.removedOnCompletion = true
@@ -134,32 +134,38 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
             }
             
             runMJAnim(focusedEditor, animUp, "MoveUpOnType")
+            MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.2, delay: 0)
+
             }
         
         
-        MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.2, delay: 0)
+        
+        focusedEditor.backspacePressed = false
+        docContents = focusedEditor.stringValue
     }
     
     func startParticles(){
-        skView = SKView(frame: self.view.bounds)
-        skView.wantsLayer = true
-        skView.allowsTransparency = true
-        scene = WriteEmitterScene(size: self.view.bounds.size)
-        skView.presentScene(scene)
-        view.addSubview(skView, positioned: NSWindowOrderingMode.Above, relativeTo: focusedEditor)
+//        skView = SKView(frame: self.view.bounds)
+//        skView.wantsLayer = true
+//        skView.allowsTransparency = true
+//        scene = WriteEmitterScene(size: self.view.bounds.size)
+//        skView.presentScene(scene)
+//        view.addSubview(skView, positioned: NSWindowOrderingMode.Above, relativeTo: focusedEditor)
     }
     
     func hideParticles(){
-        scene.emitter.particleBirthRate = 0
+//        scene.emitter.particleBirthRate = 0
     }
     
     func positionParticles(){
-        skView.frame = self.view.bounds
+//        skView.frame = self.view.bounds
     }
     
     func showParticles(speed : Double){
-        let birthRate = abs(log(abs(speed)) * 100) /// secret formula for success
-        scene.emitter.particleBirthRate = CGFloat(birthRate)
+//        let birthRate = abs(log(abs(speed)) * 1) /// secret formula for success
+//        let birthRate = abs(log(abs(speed)) * 1) /// secret formula for success
+        let birthRate = 10
+//        scene.emitter.particleBirthRate = CGFloat(birthRate)
     }
     
     func startFocusEditing(){
@@ -195,7 +201,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     
     func textView(textView: NSTextView, shouldChangeTextInRange affectedCharRange: NSRange, replacementString: String) -> Bool {
         // This was the best way I could find to bind the document to the form field in a storyboards-based app. Weird, right?
-        document.docContents = mainText.attributedString()
+        document.docContents = mainText.string
         return true
     }
 
@@ -336,7 +342,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         if editMode == .Focused {
             focusedEditor.hidden = true
             mainText.hidden = false
-            skView.hidden = true
+        //    skView.hidden = true
             mainText.string! += "\n\(focusedEditor.stringValue)\n"
         }
         
@@ -383,10 +389,20 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
     
     override func viewWillAppear() {
+        println("View vwill appear")
         let win = self.view.window
         let winc = win?.windowController() as! NSWindowController
         document = winc.document as! Document
-
+        
+        println("dumping doccontents")
+        println(document.docContents?.length)
+        
+        if let docContents = document.docContents {
+            if docContents.length > 0 {
+                savedText = document.docContents! as String
+                self.startReviewMode()
+                }
+        }
     }
 
     override func viewDidLoad() {
@@ -438,7 +454,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         positionEditorInView()
         timerContainer.frame.origin = CGPointMake(0, 0)
         editorContainer.frame = view.bounds
-        scene.repositionInView(self.view)
+//        scene.repositionInView(self.view)
 
     }
     
