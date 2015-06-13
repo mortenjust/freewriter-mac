@@ -504,7 +504,7 @@
                                         <rect key="frame" x="0.0" y="170" width="474" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="Write now" id="Mdq-n4-yRc">
-                                            <font key="font" size="44" name="AvenirNext-Regular"/>
+                                            <font key="font" size="44" name="HelveticaNeue-Thin"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         </textFieldCell>
@@ -559,6 +559,24 @@
                                                     <action selector="doneReviewPressed:" target="5gI-5U-AMq" id="1gs-XQ-Buc"/>
                                                 </connections>
                                             </button>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="3Xi-KZ-9ef">
+                                                <rect key="frame" x="-8" y="39" width="79" height="37"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="59%" id="Dbk-em-kd8">
+                                                    <font key="font" size="21" name="AvenirNext-Regular"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="9Ni-Gg-JR2">
+                                                <rect key="frame" x="-4" y="9" width="79" height="37"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Focused" id="dR2-hf-i8U">
+                                                    <font key="font" size="13" name="AvenirNext-Regular"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
                                         </subviews>
                                     </customView>
                                 </subviews>
@@ -568,6 +586,7 @@
                     <connections>
                         <outlet property="editorContainer" destination="xfm-Wf-ldW" id="KJi-91-MsL"/>
                         <outlet property="editorScrollView" destination="qnp-E1-2ZC" id="3A3-6X-hgF"/>
+                        <outlet property="focusScoreField" destination="3Xi-KZ-9ef" id="tK0-qw-nKF"/>
                         <outlet property="focusedEditor" destination="7KS-1e-6cK" id="f0Y-EP-ago"/>
                         <outlet property="innerMessage" destination="mDg-lq-z7a" id="zk6-VF-shw"/>
                         <outlet property="mainScrollView" destination="qnp-E1-2ZC" id="BhK-2B-S4u"/>

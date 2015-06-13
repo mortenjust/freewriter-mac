@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6ECEF4D5ECF1B319D77F51F1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41E8A25EFC9D18D200B5AB /* libPods.a */; };
+		C83B27541B2B81D700175DC2 /* UserInstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83B27531B2B81D700175DC2 /* UserInstruction.swift */; };
 		C86C66D21B293C9D0029F57E /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D01B293C9D0029F57E /* bokeh.png */; };
 		C86C66D51B293EDC0029F57E /* SimpleParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D31B293EDC0029F57E /* SimpleParticle.sks */; };
 		C86C66D61B293EDC0029F57E /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D41B293EDC0029F57E /* spark.png */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		2A1FC5E8D894771AD17E3873 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C83B27531B2B81D700175DC2 /* UserInstruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserInstruction.swift; path = freewriter/UserInstruction.swift; sourceTree = "<group>"; };
 		C86C66D01B293C9D0029F57E /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
 		C86C66D31B293EDC0029F57E /* SimpleParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SimpleParticle.sks; sourceTree = "<group>"; };
 		C86C66D41B293EDC0029F57E /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		C8FAC5121B0F92C000087B5F = {
 			isa = PBXGroup;
 			children = (
+				C83B27531B2B81D700175DC2 /* UserInstruction.swift */,
 				C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */,
 				C8BF12041B1E138300B750B1 /* MyPlayground.playground */,
 				C8C754FD1B16A0700021A4F5 /* Colors.swift */,
@@ -303,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8BF12031B1E088600B750B1 /* MJPOPAnim.swift in Sources */,
+				C83B27541B2B81D700175DC2 /* UserInstruction.swift in Sources */,
 				C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */,
 				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
 				C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */,

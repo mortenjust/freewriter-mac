@@ -27,7 +27,7 @@ class Document: NSDocument {
     override class func autosavesInPlace() -> Bool {
         return true
     }
-
+ 
     override func makeWindowControllers() {
         // Returns the Storyboard that contains your Document window.
         let storyboard = NSStoryboard(name: "Main", bundle: nil)!

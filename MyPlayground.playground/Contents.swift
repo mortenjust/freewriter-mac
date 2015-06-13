@@ -2,20 +2,17 @@
 
 import Cocoa
 
-var str = "Hello, playground"
 
-count(str)
+var p:Double = 0
 
-
-log(0.9) * 1000
+round(3.32)
 
 
-//let speed = abs(-0.0809939503669739)
-
-for speed in 0...1 {
-    let birthRate = abs(log(abs(speed)) * 1000)
+for i in 0...100 {
+    p = min(pow(Double(i), 0.7), 5*log(Double(i)))
 }
 
 
-
-
+for i in 0...100 {
+    p = log(Double(i))
+}

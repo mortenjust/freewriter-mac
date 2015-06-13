@@ -7,15 +7,11 @@
 //
 
 import Cocoa
-import SpriteKit
-import SceneKit
 
-class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate, NSAnimationDelegate {
+class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate, NSAnimationDelegate, FocusedEditorSpeedDelegate {
     @IBOutlet weak var reviewMessage: NSView!
     @IBOutlet weak var innerMessage: NSView!
-    
     @IBOutlet weak var mainScrollView: NSScrollView!
-    
     @IBOutlet weak var focusedEditor: FocusedEditor!
 
     
@@ -28,26 +24,22 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     var didPressBackspace = false
     var stopWatchTimer : NSTimer!
     var savedText = String()
-    var skView : SKView!
     var lastKeystroke : Double!
     var document : Document!
     var docContents : NSString = NSString() {
         didSet {
-            println("did set, updating document")
             document.docContents = docContents
         }
     }
     
-    var normalAtts: [String : NSObject]!
-    var savedAtts: [String : NSObject]!
+    @IBOutlet weak var focusScoreField: NSTextField!
+    
     
     enum MJEditMode { case Normal, Focused }
     var editMode = MJEditMode.Normal
     var isReviewing = false
     let colors = Colors()
-    var fontSize : CGFloat = 18
-    var focusedFontSize : CGFloat = 24
-    var sceneView: SCNView!
+    var sessionSpeedPoints : Double = 0
     
     @IBOutlet weak var timerContainer: NSView!
     @IBOutlet weak var editorContainer: NSView!
@@ -55,19 +47,14 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     @IBOutlet weak var stopWatchLabel: NSTextField!
     @IBOutlet weak var editorScrollView: NSScrollView!
     @IBAction func freeWriteSelected(sender:NSMenuItem){
-        println("was fw just pressed?")
         startNewSession(first: false)
     }
     
-    @IBAction func reviseSelected(sender:NSMenuItem){
-        println("was revise")
+    @IBAction func reviseSelected(sender:NSMenuItem){ // manual override
         startReviewMode()
-
     }
     
     @IBAction func biggerText(sender:AnyObject){
-        // TODO: Check for mode here, focused or not?
-        
         if editMode == .Normal {
             let newSize = mainText.font!.pointSize + CGFloat(2)
             mainText.font = NSFont(name: colors.mainFont, size: newSize)
@@ -83,6 +70,17 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         } else {
             focusedEditor.smallerFont()
         }
+    }
+    
+    func focusedEditorUserTypedReallyFast() {
+        print("[1.4]")
+        sessionSpeedPoints = sessionSpeedPoints + 1.4
+    }
+    
+    func focusedEditorUserLostFocus() {
+        print("[-5]")
+        sessionSpeedPoints -= 5
+        if sessionSpeedPoints < 1 { sessionSpeedPoints = 1 }
     }
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
@@ -109,76 +107,25 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
     
     override func controlTextDidChange(obj: NSNotification) {
-        self.focusedEditor.wantsLayer = true
-
-        if let stt = self.stopTypingTimer {
-            self.stopTypingTimer.invalidate()
-        }
-        
-        // is layer already moving, or was the most recent keystroke a backspace?
-        if (focusedEditor.layer?.pop_animationForKey("MoveUpOnType") != nil || focusedEditor.backspacePressed == true){
-        } else {
-            let jumpTo = CGRectGetMidY(view.bounds) - (focusedEditor.bounds.height/2)
-            var animUp = MJPOPSpring(view: focusedEditor, propertyName: kPOPLayerPositionY, toValue: jumpTo, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 71.6, dynamicsFriction: 8.7, dynamicsMass: 2.4, animationName: "jumpUpWhenWriting", runNow: true)
-            animUp.removedOnCompletion = true
-            animUp.completionBlock = {(one, two) -> Void in // start the decay
-                
-                self.focusedEditor.layer?.pop_removeAllAnimations()
-                
-               // hide particles after 0.2 secs
-               self.stopTypingTimer =  NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "hideParticles", userInfo: nil, repeats: false)
-                
-                // begin falling down and lower transparency
-                MJPOPSpring(view: self.focusedEditor, propertyName: kPOPLayerPositionY, toValue: 20, delay:0.1, repeatForever: false, springBounciness: 0.01, springSpeed: 13.8, dynamicsTension: 19.9, dynamicsFriction: 20, dynamicsMass: 16.6, animationName: "animateTextDown", runNow: true)
-                MJPOPBasic(view: self.focusedEditor, propertyName: kPOPLayerOpacity, toValue: 0.16, easing: MJEasing.easeInOut, duration: 1, delay: 0.1)
-            }
-            
-            runMJAnim(focusedEditor, animUp, "MoveUpOnType")
-            MJPOPBasic(view: focusedEditor, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.2, delay: 0)
-
-            }
-        
-        
-        
+        focusedEditor.animate(view)
         focusedEditor.backspacePressed = false
         docContents = focusedEditor.stringValue
     }
-    
-    func startParticles(){
-//        skView = SKView(frame: self.view.bounds)
-//        skView.wantsLayer = true
-//        skView.allowsTransparency = true
-//        scene = WriteEmitterScene(size: self.view.bounds.size)
-//        skView.presentScene(scene)
-//        view.addSubview(skView, positioned: NSWindowOrderingMode.Above, relativeTo: focusedEditor)
-    }
-    
-    func hideParticles(){
-//        scene.emitter.particleBirthRate = 0
-    }
-    
-    func positionParticles(){
-//        skView.frame = self.view.bounds
-    }
-    
-    func showParticles(speed : Double){
-//        let birthRate = abs(log(abs(speed)) * 1) /// secret formula for success
-//        let birthRate = abs(log(abs(speed)) * 1) /// secret formula for success
-        let birthRate = 10
-//        scene.emitter.particleBirthRate = CGFloat(birthRate)
-    }
-    
+
     func startFocusEditing(){
-        startParticles()
-        hideParticles()
         editMode = .Focused
         mainText.hidden = true
         focusedEditor.setup()
-        focusedEditor.positionInView(view)
+        focusedEditor.speedDelegate = self
         focusedEditor.hidden = false
         focusedEditor.delegate = self
+        focusedEditor.positionInView(view)
+        focusedEditor.animate(view)
+//        UserInstruction().show(focusedEditor: focusedEditor, view: view, instruction: "Begin writing now")
         focusedEditor.becomeFirstResponder()
+        focusedEditor.selectText(view)
         editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
+
     }
     
     func startNormalEditing(){
@@ -260,7 +207,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
     
     
-    func showReviewMessage(){
+    func showReviewMessage(sessionScore:Int){
+        
+        focusScoreField.stringValue = "\(sessionScore)%"
         reviewMessage.hidden = false
         hideTimer()
         var anim = POPSpringAnimation()
@@ -290,9 +239,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         isReviewing = false
         
         mainText.hidden = false
-        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: savedAtts)
+        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: colors.savedAtts)
         mainText.textStorage?.setAttributedString(attrString)
-        mainText.typingAttributes = normalAtts
+        mainText.typingAttributes = colors.normalAtts
         mainText.moveToEndOfDocument(nil)
         mainText.editable = true
         mainText.drawsBackground = true
@@ -306,7 +255,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         if stopWatchTimer != nil { stopWatchTimer.invalidate() }
         updateStopWatch()
         secondsLeft = nil
-        println("startNewSession")
         startProgressBar()
         progressTimer = NSTimer.scheduledTimerWithTimeInterval(sessionLength, target: self, selector: "startReviewMode", userInfo: nil, repeats: true)
 
@@ -336,18 +284,23 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     func startReviewMode(){
         println("startReviewMode")
         
-        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: savedAtts)
+        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: colors.savedAtts)
         mainText.textStorage?.setAttributedString(attrString)
+        
+        println("speedpoints \(sessionSpeedPoints) vs length \(count(focusedEditor.stringValue))")
+        
+        let sessionScore:Int = Int(round(Double(sessionSpeedPoints) / Double(count(focusedEditor.stringValue)) * 100))
+
+        println("session score is \(sessionScore)")
+        sessionSpeedPoints = 0
         
         if editMode == .Focused {
             focusedEditor.hidden = true
             mainText.hidden = false
-        //    skView.hidden = true
             mainText.string! += "\n\(focusedEditor.stringValue)\n"
         }
-        
+
         mainText.selectedRanges = [NSMakeRange(0, 0)]
-        
         mainText.selectable = true
         mainText.selectionGranularity = NSSelectionGranularity.SelectByWord
         mainText.editable = false
@@ -359,7 +312,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         
         mainText.moveToEndOfDocument(nil)
 
-        showReviewMessage()
+        showReviewMessage(sessionScore)
     }
     
     func zoomEditor(level : CGFloat, backgroundColor: NSColor){
@@ -406,11 +359,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
 
     override func viewDidLoad() {
-        normalAtts = [NSForegroundColorAttributeName : colors.textForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
-        savedAtts = [NSForegroundColorAttributeName : colors.savedTextForeground, NSFontAttributeName : NSFont(name: "Avenir Next", size: fontSize)!]
-        
-        
         self.view.wantsLayer = true
+        self.focusedEditor.wantsLayer = true
+
         reviewMessage.wantsLayer = true
         mainScrollView.scrollerStyle = NSScrollerStyle.Overlay
         mainScrollView.scrollerKnobStyle = NSScrollerKnobStyle.Light
@@ -421,7 +372,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
 
         hideTimer()
         
-     //   reviewMessage.layer?.backgroundColor = colors.reviewMessageBackground.CGColor
         editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
         
         for windowItem in NSApplication.sharedApplication().windows {
@@ -447,14 +397,11 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
 
     override func viewDidLayout() {
         focusedEditor.positionInView(view)
-        positionParticles()
-
         println("layout")
         positionReviewMessageInView()
         positionEditorInView()
         timerContainer.frame.origin = CGPointMake(0, 0)
         editorContainer.frame = view.bounds
-//        scene.repositionInView(self.view)
 
     }
     
