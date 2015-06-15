@@ -28,6 +28,7 @@ class FocusedEditor: NSTextField {
         self.bordered = false
         self.alignment = NSTextAlignment.LeftTextAlignment
         self.font = NSFont(name: colors.focusedFont, size: colors.fontSize)
+        
     }
     
     func biggerFont(){
@@ -110,6 +111,7 @@ class FocusedEditor: NSTextField {
         }
 
     }
+
     
     func userLostFocus(){
         speedDelegate.focusedEditorUserLostFocus()

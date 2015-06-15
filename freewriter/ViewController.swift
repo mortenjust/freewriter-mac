@@ -50,6 +50,10 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         startNewSession(first: false)
     }
     
+    @IBAction override func selectAll(sender: AnyObject?) {
+        println("Select all")
+    }
+    
     @IBAction func reviseSelected(sender:NSMenuItem){ // manual override
         startReviewMode()
     }
@@ -73,17 +77,22 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
     
     func focusedEditorUserTypedReallyFast() {
-        print("[1.4]")
-        sessionSpeedPoints = sessionSpeedPoints + 1.4
+        changeSessionPoints(1.4)
     }
     
     func focusedEditorUserLostFocus() {
-        print("[-5]")
-        sessionSpeedPoints -= 5
+        changeSessionPoints(-5.0)
+    }
+    
+    func changeSessionPoints(points: Double){
+        print("-\(points)")
+        sessionSpeedPoints += points
         if sessionSpeedPoints < 1 { sessionSpeedPoints = 1 }
     }
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
+        
+        println("selector: \(commandSelector)")
         
         if commandSelector == Selector("insertLineBreak:") ||
             commandSelector == Selector("insertNewline:") ||
@@ -94,7 +103,15 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
             commandSelector == Selector("moveLeft:") ||
             commandSelector == Selector("moveRight:") ||
             commandSelector == Selector("pageDown:") ||
+            commandSelector == Selector("deleteWordBackward:") ||
             commandSelector == Selector("pageUp:") ||
+            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            commandSelector == Selector("moveLeftAndModifySelection:") ||
+            commandSelector == Selector("moveToLeftEndOfLineAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
             commandSelector == Selector("selectWord:") {
                 return true
         }
@@ -102,6 +119,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         if commandSelector == Selector("deleteBackward:") ||
             commandSelector == Selector("deleteWordBackward:") {
             focusedEditor.backspacePressed = true
+            self.changeSessionPoints(-1)
         }
         return false
     }
@@ -288,8 +306,13 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         mainText.textStorage?.setAttributedString(attrString)
         
         println("speedpoints \(sessionSpeedPoints) vs length \(count(focusedEditor.stringValue))")
-        
-        let sessionScore:Int = Int(round(Double(sessionSpeedPoints) / Double(count(focusedEditor.stringValue)) * 100))
+
+        var sessionScore:Int = 0
+        if count(focusedEditor.stringValue) > 1 {
+            sessionScore = Int(round(Double(sessionSpeedPoints) / Double(count(focusedEditor.stringValue)) * 100))
+        } else {
+            sessionScore = 1
+        }
 
         println("session score is \(sessionScore)")
         sessionSpeedPoints = 0
