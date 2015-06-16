@@ -10,7 +10,13 @@ import Cocoa
 
 class FWSplitView: NSSplitView {
     var parentView : NSView!
-        
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+       // setPosition(<#position: CGFloat#>, ofDividerAtIndex: <#Int#>)
+    }
+
+    
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         

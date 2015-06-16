@@ -14,6 +14,8 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     @IBOutlet weak var mainScrollView: NSScrollView!
     @IBOutlet weak var focusedEditor: FocusedEditor!
     
+    @IBOutlet weak var blankSlateContainer: NSView!
+    
     @IBOutlet var mainText: NSTextView!
     let sessionLength:Double = 5 * 60
     var secondsLeft: Double!
@@ -39,8 +41,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet var mainView: NSVisualEffectView!
     
-    @IBOutlet var stashEditor: FWStashEditor!
-    
+    @IBOutlet var stashEditor: FWStashEditor!    
     @IBOutlet weak var stashContainer: NSView!
     
     @IBOutlet weak var stopWatchLabel: NSTextField!
@@ -103,7 +104,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         sessionSpeedPoints += points
         if sessionSpeedPoints < 1 { sessionSpeedPoints = 1 }
     }
-    
 
     func startFocusEditing(){
         editMode = .Focused
@@ -149,12 +149,14 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         if !isReviewing { return }
         let range = mainText.selectedRange()
         if range.length != 0 {
+            MJPOPBasic(view: blankSlateContainer, propertyName: kPOPLayerOpacity, toValue: 0, easing: MJEasing.easeInOut, duration: 0.5, delay: 0)
+
             let string = mainText.string!
             let substring = NSString(string: string).substringWithRange(range)
             println(substring)
             
             savedText = "\(stashEditor.string!)"
-            savedText = "\(savedText) \n- \(substring)"
+            savedText = "\(savedText) \n• \(substring)"
             
             stashEditor.string = savedText
             stashEditor.moveToEndOfDocument(nil)
@@ -262,7 +264,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
 
     func startReviewMode(){
         println("startReviewMode")
-        var attrString = NSMutableAttributedString(string: "\(savedText)", attributes: colors.savedAtts)
+        var attrString = NSMutableAttributedString(string: "\(savedText)", attributes: colors.stashEditorAtts)
         stashEditor.textStorage?.setAttributedString(attrString)
         println("speedpoints \(sessionSpeedPoints) vs length \(count(focusedEditor.stringValue))")
         
@@ -276,8 +278,28 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         println("session score is \(sessionScore)")
         sessionSpeedPoints = 0
 
+        stashContainer.wantsLayer = true
+        stashContainer.alphaValue = 0
+        stashContainer.layer?.backgroundColor = colors.stashEditorBackground.CGColor
+
+        
+        var shadow = NSShadow()
+        shadow.shadowOffset = NSSize(width: 10, height: 10)
+        shadow.shadowBlurRadius = 3
+        shadow.shadowColor = NSColor.blackColor()
+        
+        stashContainer.shadow = shadow
+        
+        MJPOPSpring(view: stashContainer, propertyName: kPOPLayerOpacity, toValue: 1, dynamicsTension: 2.1, dynamicsFriction: 4.9, dynamicsMass: 0.01)
+        
+
+        
+        
         // user interface
-        mainText.typingAttributes = colors.savedAtts
+        mainText.textContainerInset = NSSize(width: 20, height: 20)
+        stashEditor.textContainerInset = NSSize(width: 20, height: 20)
+        blankSlateContainer.alphaValue = 0.4
+        mainText.typingAttributes = colors.sessionReviewAtts
         if editMode == .Focused {
             focusedEditor.hidden = true
             mainText.hidden = false

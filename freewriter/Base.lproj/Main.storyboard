@@ -479,8 +479,8 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="491" height="127"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textView drawsBackground="NO" importsGraphics="NO" selectionGranularity="word" findStyle="panel" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" linkDetection="YES" dashSubstitution="YES" smartInsertDelete="YES" id="j5u-vD-OFB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="491" height="127"/>
+                                                        <textView drawsBackground="NO" importsGraphics="NO" horizontallyResizable="YES" selectionGranularity="word" findStyle="panel" allowsDocumentBackgroundColorChange="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" linkDetection="YES" dashSubstitution="YES" smartInsertDelete="YES" id="j5u-vD-OFB" userLabel="mainText">
+                                                            <rect key="frame" x="0.0" y="0.0" width="491" height="404"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" white="1" alpha="0.71999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -509,6 +509,60 @@
                                                 <rect key="frame" x="279" y="0.0" width="271" height="404"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
+                                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="6qS-nG-I3C" userLabel="Blank Slate Container">
+                                                        <rect key="frame" x="54" y="105" width="163" height="194"/>
+                                                        <subviews>
+                                                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8MT-Wj-o7j">
+                                                                <rect key="frame" x="0.0" y="27" width="163" height="65"/>
+                                                                <clipView key="contentView" misplaced="YES" drawsBackground="NO" copiesOnScroll="NO" id="rKb-Qi-rWA">
+                                                                    <rect key="frame" x="1" y="1" width="223" height="133"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="ZRt-zq-3Ch">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            <size key="minSize" width="163" height="65"/>
+                                                                            <size key="maxSize" width="463" height="10000000"/>
+                                                                            <attributedString key="textStorage">
+                                                                                <fragment content="When you select words, you can edit them here">
+                                                                                    <attributes>
+                                                                                        <font key="NSFont" size="17" name="AvenirNext-Regular"/>
+                                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                                                    </attributes>
+                                                                                </fragment>
+                                                                            </attributedString>
+                                                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                            <size key="minSize" width="163" height="65"/>
+                                                                            <size key="maxSize" width="463" height="10000000"/>
+                                                                        </textView>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </clipView>
+                                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="lzV-wm-EDB">
+                                                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </scroller>
+                                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" arrowsPosition="none" horizontal="NO" id="K0a-hC-qrM">
+                                                                    <rect key="frame" x="224" y="1" width="15" height="133"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </scroller>
+                                                            </scrollView>
+                                                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yee-Ie-gAn" userLabel="Image:Highlighter">
+                                                                <rect key="frame" x="57" y="110" width="48" height="48"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="48" id="0xn-hs-dtA"/>
+                                                                    <constraint firstAttribute="width" constant="48" id="dXV-Oj-KR1"/>
+                                                                </constraints>
+                                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="highlighter" id="scg-Ix-VV8"/>
+                                                            </imageView>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="194" id="3yf-65-dwy"/>
+                                                            <constraint firstAttribute="width" constant="163" id="8XU-nH-BMe"/>
+                                                            <constraint firstAttribute="centerX" secondItem="Yee-Ie-gAn" secondAttribute="centerX" id="hSz-Lw-Ksr"/>
+                                                        </constraints>
+                                                    </customView>
                                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1c-d2-aZd">
                                                         <rect key="frame" x="0.0" y="0.0" width="271" height="404"/>
                                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="NGg-Fg-NAh">
@@ -516,7 +570,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textView drawsBackground="NO" importsGraphics="NO" horizontallyResizable="YES" selectionGranularity="word" findStyle="panel" continuousSpellChecking="YES" allowsDocumentBackgroundColorChange="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="MY4-nY-kMK" customClass="FWStashEditor" customModule="Freewriter" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="462" height="135"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="462" height="404"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <size key="minSize" width="271" height="404"/>
@@ -543,6 +597,10 @@
                                                     <constraint firstItem="t1c-d2-aZd" firstAttribute="top" secondItem="iqa-Kg-4bh" secondAttribute="top" id="VeM-eT-d8Y"/>
                                                     <constraint firstAttribute="bottom" secondItem="t1c-d2-aZd" secondAttribute="bottom" id="WrY-AR-aHs"/>
                                                     <constraint firstAttribute="trailing" secondItem="t1c-d2-aZd" secondAttribute="trailing" id="gB0-wP-NE0"/>
+                                                    <constraint firstAttribute="centerX" secondItem="6qS-nG-I3C" secondAttribute="centerX" id="geU-0d-K3a"/>
+                                                    <constraint firstAttribute="centerY" secondItem="6qS-nG-I3C" secondAttribute="centerY" id="id5-dc-bkP"/>
+                                                    <constraint firstAttribute="centerX" secondItem="6qS-nG-I3C" secondAttribute="centerX" id="jwP-W9-rHB"/>
+                                                    <constraint firstAttribute="centerY" secondItem="6qS-nG-I3C" secondAttribute="centerY" id="oaC-LK-Eul"/>
                                                 </constraints>
                                             </customView>
                                         </subviews>
@@ -562,7 +620,7 @@
                                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         </textFieldCell>
                                     </textField>
-                                    <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="light" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="54c-gJ-ck6" userLabel="reviewMessage">
+                                    <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="54c-gJ-ck6" userLabel="reviewMessage">
                                         <rect key="frame" x="0.0" y="0.0" width="550" height="96"/>
                                         <subviews>
                                             <customView appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="mDg-lq-z7a" userLabel="messageContent">
@@ -575,7 +633,7 @@
                                                         </constraints>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Select the words and sentences you want to keep" id="iNe-CY-aZc">
                                                             <font key="font" size="13" name="AvenirNext-Regular"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
@@ -596,7 +654,7 @@
                                                                 <rect key="frame" x="15" y="30" width="79" height="37"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="59%" id="Dbk-em-kd8">
                                                                     <font key="font" size="21" name="AvenirNext-Regular"/>
-                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
@@ -604,7 +662,7 @@
                                                                 <rect key="frame" x="15" y="0.0" width="79" height="37"/>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Focused" id="dR2-hf-i8U">
                                                                     <font key="font" size="13" name="AvenirNext-Regular"/>
-                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
                                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
@@ -649,7 +707,7 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icTimer" id="woF-vC-Ji6"/>
                                     </imageView>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZeA-sQ-4BI">
-                                        <rect key="frame" x="37" y="9" width="50" height="28"/>
+                                        <rect key="frame" x="37" y="10" width="50" height="28"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="5:00" id="n93-c4-2WE">
                                             <font key="font" size="13" name="AvenirNext-Regular"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="0.66000000000000003" colorSpace="calibratedRGB"/>
@@ -667,6 +725,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="blankSlateContainer" destination="6qS-nG-I3C" id="WLo-vo-9dB"/>
                         <outlet property="editorContainer" destination="xfm-Wf-ldW" id="KJi-91-MsL"/>
                         <outlet property="editorScrollView" destination="qnp-E1-2ZC" id="3A3-6X-hgF"/>
                         <outlet property="focusScoreField" destination="3Xi-KZ-9ef" id="tK0-qw-nKF"/>
@@ -683,6 +742,24 @@
                         <outlet property="timerView" destination="1MD-1f-pLE" id="gEM-fV-S1i"/>
                     </connections>
                 </viewController>
+                <textView importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="h70-xB-yNi">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="135"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <size key="minSize" width="240" height="135"/>
+                    <size key="maxSize" width="463" height="10000000"/>
+                    <attributedString key="textStorage">
+                        <fragment content="Sentences you select will be saved here">
+                            <attributes>
+                                <font key="NSFont" size="12" name="Helvetica"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                    <size key="minSize" width="240" height="135"/>
+                    <size key="maxSize" width="463" height="10000000"/>
+                </textView>
                 <customObject id="j1V-Dy-lxe" customClass="Document" customModule="Freewriter" customModuleProvider="target"/>
                 <userDefaultsController representsSharedInstance="YES" id="Yic-9f-c0f"/>
             </objects>
@@ -691,6 +768,7 @@
     </scenes>
     <resources>
         <image name="DoneButton" width="99" height="36"/>
+        <image name="highlighter" width="86" height="86"/>
         <image name="icTimer" width="14" height="17"/>
     </resources>
 </document>

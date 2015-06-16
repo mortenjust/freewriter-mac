@@ -17,11 +17,12 @@ class FWStashEditor: NSTextView {
         super.init(coder: coder)
         typingAttributes = colors.savedAtts
         backgroundColor = colors.editorBackground
-    }
+        insertionPointColor = NSColor.blackColor()
+        self.wantsLayer = true
+}
 
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
-        
         // Drawing code here.
     }
     

@@ -15,8 +15,11 @@ struct Colors {
     let reviewEditorBackground = NSColor(red:0.039, green:0.020, blue:0.239, alpha:0)
 //    let editorBackground = NSColor(red:0.047, green:0.031, blue:0.306, alpha:0.7)
     let editorBackground = NSColor(calibratedRed: 0, green: 0, blue: 0, alpha: 0.5)
+    let stashEditorBackground = NSColor(calibratedRed: 1, green: 1, blue: 1, alpha: 1)
 
-    let savedTextForeground = NSColor(red:1, green:1, blue:1, alpha:0.8)
+    let savedTextForeground = NSColor(red:0, green:0, blue:0, alpha:0.8)
+    let sessionEditorForeground = NSColor(red:1, green:1, blue:1, alpha:0.8)
+    let stashEditorForeground = NSColor(red:0, green:0, blue:0, alpha:0.8)
     
     let insertionPoint = NSColor(red:1, green:0.341, blue:0.133, alpha:1)
     
@@ -35,6 +38,7 @@ struct Colors {
     var normalAtts: [String : NSObject]!
     var savedAtts: [String : NSObject]!
     var sessionReviewAtts: [String : NSObject]!
+    var stashEditorAtts: [String : NSObject]!
 
     init() {
         
@@ -46,6 +50,12 @@ struct Colors {
         }
         normalAtts = [NSForegroundColorAttributeName : textForeground, NSFontAttributeName : NSFont(name: focusedFont, size: fontSize)!]
         savedAtts = [NSForegroundColorAttributeName : savedTextForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
+
+        // the saved text
+        stashEditorAtts = [NSForegroundColorAttributeName : stashEditorForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
+        
+        // the session text
+        sessionReviewAtts = [NSForegroundColorAttributeName : sessionEditorForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
 
         
         
