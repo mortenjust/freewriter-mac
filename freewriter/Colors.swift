@@ -34,6 +34,7 @@ struct Colors {
     var savedTextFontSize : CGFloat = 16.0
     var normalAtts: [String : NSObject]!
     var savedAtts: [String : NSObject]!
+    var sessionReviewAtts: [String : NSObject]!
 
     init() {
         
@@ -45,5 +46,8 @@ struct Colors {
         }
         normalAtts = [NSForegroundColorAttributeName : textForeground, NSFontAttributeName : NSFont(name: focusedFont, size: fontSize)!]
         savedAtts = [NSForegroundColorAttributeName : savedTextForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
+
+        
+        
     }
   }

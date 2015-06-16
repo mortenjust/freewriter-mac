@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		6ECEF4D5ECF1B319D77F51F1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41E8A25EFC9D18D200B5AB /* libPods.a */; };
+		C80C4DA31B2F48DF00F07C85 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80C4DA21B2F48DF00F07C85 /* WebKit.framework */; };
+		C80C4DA71B2F804200F07C85 /* FWTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80C4DA61B2F804200F07C85 /* FWTimerView.swift */; };
+		C80C4DA91B2F8FBE00F07C85 /* FWSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80C4DA81B2F8FBE00F07C85 /* FWSplitView.swift */; };
+		C80C4DAB1B2F919B00F07C85 /* FWStashEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80C4DAA1B2F919B00F07C85 /* FWStashEditor.swift */; };
 		C83B27541B2B81D700175DC2 /* UserInstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83B27531B2B81D700175DC2 /* UserInstruction.swift */; };
 		C86C66D21B293C9D0029F57E /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D01B293C9D0029F57E /* bokeh.png */; };
 		C86C66D51B293EDC0029F57E /* SimpleParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D31B293EDC0029F57E /* SimpleParticle.sks */; };
@@ -35,8 +39,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C80C4DA41B2F48F400F07C85 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2A1FC5E8D894771AD17E3873 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C80C4DA21B2F48DF00F07C85 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		C80C4DA61B2F804200F07C85 /* FWTimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FWTimerView.swift; path = freewriter/FWTimerView.swift; sourceTree = "<group>"; };
+		C80C4DA81B2F8FBE00F07C85 /* FWSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FWSplitView.swift; sourceTree = "<group>"; };
+		C80C4DAA1B2F919B00F07C85 /* FWStashEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FWStashEditor.swift; sourceTree = "<group>"; };
 		C83B27531B2B81D700175DC2 /* UserInstruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserInstruction.swift; path = freewriter/UserInstruction.swift; sourceTree = "<group>"; };
 		C86C66D01B293C9D0029F57E /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
 		C86C66D31B293EDC0029F57E /* SimpleParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SimpleParticle.sks; sourceTree = "<group>"; };
@@ -67,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C80C4DA31B2F48DF00F07C85 /* WebKit.framework in Frameworks */,
 				6ECEF4D5ECF1B319D77F51F1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +114,7 @@
 		B40E0CD0A47392558B0B1295 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C80C4DA21B2F48DF00F07C85 /* WebKit.framework */,
 				FF41E8A25EFC9D18D200B5AB /* libPods.a */,
 			);
 			name = Frameworks;
@@ -101,6 +123,9 @@
 		C8FAC5121B0F92C000087B5F = {
 			isa = PBXGroup;
 			children = (
+				C80C4DAA1B2F919B00F07C85 /* FWStashEditor.swift */,
+				C80C4DA81B2F8FBE00F07C85 /* FWSplitView.swift */,
+				C80C4DA61B2F804200F07C85 /* FWTimerView.swift */,
 				C83B27531B2B81D700175DC2 /* UserInstruction.swift */,
 				C8BF12021B1E088600B750B1 /* MJPOPAnim.swift */,
 				C8BF12041B1E138300B750B1 /* MyPlayground.playground */,
@@ -179,6 +204,7 @@
 				C8FAC5181B0F92C000087B5F /* Frameworks */,
 				C8FAC5191B0F92C000087B5F /* Resources */,
 				D7EB33C1C3D2EAE1D6C25F25 /* Copy Pods Resources */,
+				C80C4DA41B2F48F400F07C85 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -306,12 +332,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8BF12031B1E088600B750B1 /* MJPOPAnim.swift in Sources */,
+				C80C4DA71B2F804200F07C85 /* FWTimerView.swift in Sources */,
 				C83B27541B2B81D700175DC2 /* UserInstruction.swift in Sources */,
 				C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */,
 				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
+				C80C4DAB1B2F919B00F07C85 /* FWStashEditor.swift in Sources */,
 				C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */,
 				C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */,
 				C8979EC11B216373001DE5EA /* FocusedEditor.swift in Sources */,
+				C80C4DA91B2F8FBE00F07C85 /* FWSplitView.swift in Sources */,
 				C8FAC5251B0F92C000087B5F /* Document.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +462,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = freewriter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -448,6 +481,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = freewriter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -8,12 +8,11 @@
 
 import Cocoa
 
-class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate, NSAnimationDelegate, FocusedEditorSpeedDelegate {
+class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate, FocusedEditorWritingDelegate {
     @IBOutlet weak var reviewMessage: NSView!
     @IBOutlet weak var innerMessage: NSView!
     @IBOutlet weak var mainScrollView: NSScrollView!
     @IBOutlet weak var focusedEditor: FocusedEditor!
-
     
     @IBOutlet var mainText: NSTextView!
     let sessionLength:Double = 5 * 60
@@ -26,14 +25,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     var savedText = String()
     var lastKeystroke : Double!
     var document : Document!
-    var docContents : NSString = NSString() {
-        didSet {
-            document.docContents = docContents
-        }
-    }
-    
+
+   
     @IBOutlet weak var focusScoreField: NSTextField!
-    
     
     enum MJEditMode { case Normal, Focused }
     var editMode = MJEditMode.Normal
@@ -41,14 +35,26 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     let colors = Colors()
     var sessionSpeedPoints : Double = 0
     
-    @IBOutlet weak var timerContainer: NSView!
+    @IBOutlet weak var timerView: FWTimerView!
     @IBOutlet weak var editorContainer: NSView!
     @IBOutlet var mainView: NSVisualEffectView!
+    
+    @IBOutlet var stashEditor: FWStashEditor!
+    
+    @IBOutlet weak var stashContainer: NSView!
+    
     @IBOutlet weak var stopWatchLabel: NSTextField!
     @IBOutlet weak var editorScrollView: NSScrollView!
+    
+    @IBOutlet var  splitView: FWSplitView!
+    
+
     @IBAction func freeWriteSelected(sender:NSMenuItem){
         startNewSession(first: false)
     }
+    
+    
+    
     
     @IBAction override func selectAll(sender: AnyObject?) {
         println("Select all")
@@ -84,66 +90,33 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         changeSessionPoints(-5.0)
     }
     
+    func focusedEditorSessionPointChanged(byPoints: Double) {
+        changeSessionPoints(byPoints)
+    }
+    
+    func focusedEditorTextChangedTo(newString: String) {
+
+    }
+    
     func changeSessionPoints(points: Double){
         print("-\(points)")
         sessionSpeedPoints += points
         if sessionSpeedPoints < 1 { sessionSpeedPoints = 1 }
     }
     
-    func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
-        
-        println("selector: \(commandSelector)")
-        
-        if commandSelector == Selector("insertLineBreak:") ||
-            commandSelector == Selector("insertNewline:") ||
-            commandSelector == Selector("insertTab:") ||
-            commandSelector == Selector("moveBackward:") ||
-            commandSelector == Selector("moveDown:") ||
-            commandSelector == Selector("moveForward:") ||
-            commandSelector == Selector("moveLeft:") ||
-            commandSelector == Selector("moveRight:") ||
-            commandSelector == Selector("pageDown:") ||
-            commandSelector == Selector("deleteWordBackward:") ||
-            commandSelector == Selector("pageUp:") ||
-            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
-            commandSelector == Selector("moveLeftAndModifySelection:") ||
-            commandSelector == Selector("moveToLeftEndOfLineAndModifySelection:") ||
-            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
-            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
-            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
-            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
-            commandSelector == Selector("selectWord:") {
-                return true
-        }
-
-        if commandSelector == Selector("deleteBackward:") ||
-            commandSelector == Selector("deleteWordBackward:") {
-            focusedEditor.backspacePressed = true
-            self.changeSessionPoints(-1)
-        }
-        return false
-    }
-    
-    override func controlTextDidChange(obj: NSNotification) {
-        focusedEditor.animate(view)
-        focusedEditor.backspacePressed = false
-        docContents = focusedEditor.stringValue
-    }
 
     func startFocusEditing(){
         editMode = .Focused
         mainText.hidden = true
         focusedEditor.setup()
-        focusedEditor.speedDelegate = self
+        focusedEditor.parentView = view
+        focusedEditor.writingDelegate = self
         focusedEditor.hidden = false
-        focusedEditor.delegate = self
-        focusedEditor.positionInView(view)
+//        focusedEditor.positionInView(view)
         focusedEditor.animate(view)
-//        UserInstruction().show(focusedEditor: focusedEditor, view: view, instruction: "Begin writing now")
         focusedEditor.becomeFirstResponder()
         focusedEditor.selectText(view)
         editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
-
     }
     
     func startNormalEditing(){
@@ -160,7 +133,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     
     @IBAction func doneReviewPressed(sender: NSButton) {
         println("done pressed")
-        focusedEditor.stringValue = " "
+        savedText = stashEditor.string!
+        focusedEditor.stringValue = "Let's go again!"
+        mainText.string = " "
         startNewSession()
     }
     
@@ -177,7 +152,13 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
             let string = mainText.string!
             let substring = NSString(string: string).substringWithRange(range)
             println(substring)
+            
+            savedText = "\(stashEditor.string!)"
             savedText = "\(savedText) \n- \(substring)"
+            
+            stashEditor.string = savedText
+            stashEditor.moveToEndOfDocument(nil)
+            
             mainText.textStorage?.addAttribute(NSForegroundColorAttributeName, value: colors.selectedText, range: range)
             mainText.textStorage?.addAttribute(NSBackgroundColorAttributeName, value: colors.selectedBackground, range: range)
         }
@@ -202,15 +183,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         fadeAnim.duration = 0.5
         reviewMessage.layer?.pop_addAnimation(fadeAnim, forKey: "opacity")
         
-        
-        
-        var moveWatch = POPBasicAnimation.linearAnimation()
-        moveWatch.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionX) as! POPAnimatableProperty
-        moveWatch.fromValue = view.bounds.width - timerContainer.bounds.width
-        moveWatch.toValue = 1
-        moveWatch.duration = sessionLength
-        timerContainer.wantsLayer = true
-        timerContainer.layer?.pop_addAnimation(moveWatch, forKey: "movex")
+        timerView.start(sessionLength, view:self.view)
     }
     
     func hideReviewMessage(){
@@ -226,16 +199,15 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     
     
     func showReviewMessage(sessionScore:Int){
-        
         focusScoreField.stringValue = "\(sessionScore)%"
         reviewMessage.hidden = false
-        hideTimer()
+        timerView.hide()
         var anim = POPSpringAnimation()
         anim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
         anim.toValue = 0
+        anim.removedOnCompletion = true
         reviewMessage.layer?.pop_addAnimation(anim, forKey: "position")
         reviewMessage.becomeFirstResponder()
-        self.view.needsLayout = true
         fadeView(reviewMessage, toValue: 1)
         
         var moveAnim = POPBasicAnimation.easeInAnimation()
@@ -257,7 +229,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         isReviewing = false
         
         mainText.hidden = false
-        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: colors.savedAtts)
+        var attrString = NSMutableAttributedString(string: "\(savedText)", attributes: colors.savedAtts)
         mainText.textStorage?.setAttributedString(attrString)
         mainText.typingAttributes = colors.normalAtts
         mainText.moveToEndOfDocument(nil)
@@ -267,7 +239,10 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
     
     func startNewSession(first:Bool=false){
-        showTimer()
+        if let s = splitView {
+        s.hidden = true
+        }
+        timerView.show()
         hideReviewMessage()
         secondsLeft = sessionLength
         if stopWatchTimer != nil { stopWatchTimer.invalidate() }
@@ -283,45 +258,37 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         }
     }
     
-    func moveTimer(y:CGFloat){
-        var timerAnim = POPSpringAnimation()
-        timerAnim.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionY) as! POPAnimatableProperty
-        timerAnim.toValue = y
-        timerContainer.wantsLayer = true
-        timerContainer.layer?.pop_addAnimation(timerAnim, forKey: "pos")
-    }
-    
-    func hideTimer(){
-        moveTimer(-timerContainer.bounds.height)
-    }
-    
-    func showTimer(){
-        moveTimer(0)
-    }
+
 
     func startReviewMode(){
         println("startReviewMode")
-        
-        var attrString = NSMutableAttributedString(string: "\(savedText)\n\n", attributes: colors.savedAtts)
-        mainText.textStorage?.setAttributedString(attrString)
-        
+        var attrString = NSMutableAttributedString(string: "\(savedText)", attributes: colors.savedAtts)
+        stashEditor.textStorage?.setAttributedString(attrString)
         println("speedpoints \(sessionSpeedPoints) vs length \(count(focusedEditor.stringValue))")
-
+        
+        // score
         var sessionScore:Int = 0
         if count(focusedEditor.stringValue) > 1 {
             sessionScore = Int(round(Double(sessionSpeedPoints) / Double(count(focusedEditor.stringValue)) * 100))
         } else {
             sessionScore = 1
         }
-
         println("session score is \(sessionScore)")
         sessionSpeedPoints = 0
-        
+
+        // user interface
+        mainText.typingAttributes = colors.savedAtts
         if editMode == .Focused {
             focusedEditor.hidden = true
             mainText.hidden = false
             mainText.string! += "\n\(focusedEditor.stringValue)\n"
         }
+        
+        splitView.hidden = false
+        
+//        splitView.positionInParentView()
+//        stashEditor.positionInParentView()
+
 
         mainText.selectedRanges = [NSMakeRange(0, 0)]
         mainText.selectable = true
@@ -334,6 +301,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
         zoomEditor(1.02, backgroundColor: colors.reviewEditorBackground)
         
         mainText.moveToEndOfDocument(nil)
+        stashEditor.moveToEndOfDocument(nil)
 
         showReviewMessage(sessionScore)
     }
@@ -382,19 +350,18 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
 
     override func viewDidLoad() {
+
         self.view.wantsLayer = true
         self.focusedEditor.wantsLayer = true
-
         reviewMessage.wantsLayer = true
+        stashEditor.parentView = self.view
+        splitView.parentView = self.view
         mainScrollView.scrollerStyle = NSScrollerStyle.Overlay
         mainScrollView.scrollerKnobStyle = NSScrollerKnobStyle.Light
-        
         mainView.material = NSVisualEffectMaterial.Dark
         mainView.state = NSVisualEffectState.Active
         mainView.blendingMode = NSVisualEffectBlendingMode.BehindWindow
-
-        hideTimer()
-        
+        timerView.hide()
         editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
         
         for windowItem in NSApplication.sharedApplication().windows {
@@ -419,29 +386,31 @@ class ViewController: NSViewController, NSTextViewDelegate, NSTextFieldDelegate,
     }
 
     override func viewDidLayout() {
-        focusedEditor.positionInView(view)
-        println("layout")
-        positionReviewMessageInView()
-        positionEditorInView()
-        timerContainer.frame.origin = CGPointMake(0, 0)
-        editorContainer.frame = view.bounds
-
+//        focusedEditor.positionInView(view)
+//        println("layout")
+//        positionReviewMessageInView()
+//        positionEditorInView()
+//        
+        if !isReviewing {
+            timerView.frame.origin = CGPointMake(0, 0)
+            }
+//        editorContainer.frame = view.bounds
     }
     
     func positionReviewMessageInView(){
-            reviewMessage.frame.origin.y = 0
-            reviewMessage.frame.size.width = self.view.bounds.width
-            println(reviewMessage.frame.size.width)
-            let midPoint = reviewMessage.bounds.width/2
-            innerMessage.frame.origin.x = midPoint-(innerMessage.bounds.width/2) // center=center, the nsway, omg
+//            reviewMessage.frame.origin.y = 0
+//            reviewMessage.frame.size.width = self.view.bounds.width
+//            println(reviewMessage.frame.size.width)
+//            let midPoint = reviewMessage.bounds.width/2
+//            innerMessage.frame.origin.x = midPoint-(innerMessage.bounds.width/2) // center=center, the nsway, omg
     }
     
     func positionEditorInView(){
-        let midPoint = self.view.bounds.width/2
-        editorScrollView.frame.origin.x = midPoint - (editorScrollView.bounds.width/2)
-        editorScrollView.frame.origin.y = 0 + reviewMessage.bounds.height
-        editorScrollView.frame.size.height = self.view.bounds.height-25-reviewMessage.bounds.height //
-        mainText.frame.size.width = editorScrollView.bounds.width-10
+//        let midPoint = self.view.bounds.width/2
+//        editorScrollView.frame.origin.x = midPoint - (editorScrollView.bounds.width/2)
+//        editorScrollView.frame.origin.y = 0 + reviewMessage.bounds.height
+//        editorScrollView.frame.size.height = self.view.bounds.height-25-reviewMessage.bounds.height //
+//        mainText.frame.size.width = editorScrollView.bounds.width-10
     }
     
     func updateStopWatch(){

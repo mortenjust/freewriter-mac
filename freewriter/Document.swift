@@ -10,8 +10,10 @@ import Cocoa
 
 class Document: NSDocument {
     @IBOutlet weak var docContents = NSString()
-    var mainText : NSTextView!
     
+    var stashedText = String()
+    var stashedItems = [String]()
+    var editorText = String()
     
     override init() {
         super.init()

@@ -8,27 +8,29 @@
 
 import Cocoa
 
-
-protocol FocusedEditorSpeedDelegate {
+protocol FocusedEditorWritingDelegate {
     func focusedEditorUserTypedReallyFast()
     func focusedEditorUserLostFocus()
+    func focusedEditorTextChangedTo(newString:String)
+    func focusedEditorSessionPointChanged(byPoints:Double)
 }
 
-class FocusedEditor: NSTextField {
+class FocusedEditor: NSTextField, NSTextFieldDelegate {
     var backspacePressed = true
     var focusedFontSize : CGFloat!
     let colors = Colors()
     var jumpHowHigh:CGFloat = 0
     var jumpHowHighTimer:NSTimer!
     var lostFocusTimer:NSTimer!
-    var speedDelegate : FocusedEditorSpeedDelegate!
+    var writingDelegate : FocusedEditorWritingDelegate!
+    var parentView:NSView!
     
     func setup(){
         self.backgroundColor = NSColor.clearColor()
         self.bordered = false
         self.alignment = NSTextAlignment.LeftTextAlignment
         self.font = NSFont(name: colors.focusedFont, size: colors.fontSize)
-        
+        self.delegate = self
     }
     
     func biggerFont(){
@@ -71,7 +73,7 @@ class FocusedEditor: NSTextField {
         
         if (self.layer?.pop_animationForKey("MoveUpOnType") != nil || self.backspacePressed == true){
         } else {
-            self.speedDelegate.focusedEditorUserTypedReallyFast()
+            self.writingDelegate.focusedEditorUserTypedReallyFast()
 
             if bounds.origin.y < view.bounds.height-10 {
                 jumpHowHigh += 0.5
@@ -107,20 +109,61 @@ class FocusedEditor: NSTextField {
             
             runMJAnim(self, animUp, "MoveUpOnType")
             MJPOPBasic(view: self, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.2, delay: 0)
-            
         }
-
     }
 
+
+    
     
     func userLostFocus(){
-        speedDelegate.focusedEditorUserLostFocus()
+        writingDelegate.focusedEditorUserLostFocus()
     }
     
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
 
         // Drawing code here.
+    }
+    
+    
+    func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
+        
+        println("selector: \(commandSelector)")
+        
+        if commandSelector == Selector("insertLineBreak:") ||
+            commandSelector == Selector("insertNewline:") ||
+            commandSelector == Selector("insertTab:") ||
+            commandSelector == Selector("moveBackward:") ||
+            commandSelector == Selector("moveDown:") ||
+            commandSelector == Selector("moveForward:") ||
+            commandSelector == Selector("moveLeft:") ||
+            commandSelector == Selector("moveRight:") ||
+            commandSelector == Selector("pageDown:") ||
+            commandSelector == Selector("deleteWordBackward:") ||
+            commandSelector == Selector("pageUp:") ||
+            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            commandSelector == Selector("moveLeftAndModifySelection:") ||
+            commandSelector == Selector("moveToLeftEndOfLineAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            //            commandSelector == Selector("moveWordLeftAndModifySelection:") ||
+            commandSelector == Selector("selectWord:") {
+                return true
+        }
+        
+        if commandSelector == Selector("deleteBackward:") ||
+            commandSelector == Selector("deleteWordBackward:") {
+                self.backspacePressed = true
+                writingDelegate.focusedEditorSessionPointChanged(-1)
+        }
+        return false
+    }
+    
+    override func controlTextDidChange(obj: NSNotification) {
+        self.animate(parentView)
+        backspacePressed = false
+        writingDelegate.focusedEditorTextChangedTo(self.stringValue)
     }
     
 }
