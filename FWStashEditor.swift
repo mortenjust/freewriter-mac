@@ -8,10 +8,14 @@
 
 import Cocoa
 
+protocol FWStashEditorDelegate : NSTextViewDelegate {
+    func stashEditorDidChange()
+}
+
 class FWStashEditor: NSTextView {
-    
-    var parentView : NSView!
+
     let colors = Colors()
+    var stashEditorDelegate : FWStashEditorDelegate!
     
     required init?(coder: NSCoder) { // init via storyboard
         super.init(coder: coder)
@@ -19,15 +23,16 @@ class FWStashEditor: NSTextView {
         backgroundColor = colors.editorBackground
         insertionPointColor = NSColor.blackColor()
         self.wantsLayer = true
-}
-
+        }
+    
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         // Drawing code here.
     }
     
-    func positionInParentView(){
-        self.frame = parentView.bounds
+    override func didChangeText() {
+        stashEditorDelegate.stashEditorDidChange()
     }
+    
     
 }

@@ -16,6 +16,8 @@
 		C86C66D21B293C9D0029F57E /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D01B293C9D0029F57E /* bokeh.png */; };
 		C86C66D51B293EDC0029F57E /* SimpleParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D31B293EDC0029F57E /* SimpleParticle.sks */; };
 		C86C66D61B293EDC0029F57E /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = C86C66D41B293EDC0029F57E /* spark.png */; };
+		C8976F711B30FB76005021F3 /* FWButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8976F701B30FB76005021F3 /* FWButton.swift */; };
+		C8976F731B30FC95005021F3 /* FWButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8976F721B30FC95005021F3 /* FWButtonCell.swift */; };
 		C8979EBA1B211B3E001DE5EA /* WriteParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C8979EB81B211B3E001DE5EA /* WriteParticle.sks */; };
 		C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */; };
 		C8979EC11B216373001DE5EA /* FocusedEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8979EC01B216373001DE5EA /* FocusedEditor.swift */; };
@@ -61,6 +63,8 @@
 		C86C66D01B293C9D0029F57E /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
 		C86C66D31B293EDC0029F57E /* SimpleParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SimpleParticle.sks; sourceTree = "<group>"; };
 		C86C66D41B293EDC0029F57E /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		C8976F701B30FB76005021F3 /* FWButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FWButton.swift; sourceTree = "<group>"; };
+		C8976F721B30FC95005021F3 /* FWButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FWButtonCell.swift; sourceTree = "<group>"; };
 		C8979EB81B211B3E001DE5EA /* WriteParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WriteParticle.sks; sourceTree = "<group>"; };
 		C8979EBC1B2127EE001DE5EA /* WriteEmitterScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteEmitterScene.swift; sourceTree = "<group>"; };
 		C8979EC01B216373001DE5EA /* FocusedEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusedEditor.swift; path = ../FocusedEditor.swift; sourceTree = "<group>"; };
@@ -161,6 +165,8 @@
 				C8FAC5241B0F92C000087B5F /* Document.swift */,
 				C8FAC5261B0F92C000087B5F /* Images.xcassets */,
 				C8FAC5281B0F92C000087B5F /* Main.storyboard */,
+				C8976F701B30FB76005021F3 /* FWButton.swift */,
+				C8976F721B30FC95005021F3 /* FWButtonCell.swift */,
 				C8FAC51E1B0F92C000087B5F /* Supporting Files */,
 				C8C754FA1B1579940021A4F5 /* freewriter-Bridging-Header.h */,
 			);
@@ -337,6 +343,8 @@
 				C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */,
 				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
 				C80C4DAB1B2F919B00F07C85 /* FWStashEditor.swift in Sources */,
+				C8976F731B30FC95005021F3 /* FWButtonCell.swift in Sources */,
+				C8976F711B30FB76005021F3 /* FWButton.swift in Sources */,
 				C8C754FE1B16A0700021A4F5 /* Colors.swift in Sources */,
 				C8FAC5211B0F92C000087B5F /* AppDelegate.swift in Sources */,
 				C8979EC11B216373001DE5EA /* FocusedEditor.swift in Sources */,

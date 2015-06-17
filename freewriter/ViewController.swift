@@ -8,11 +8,13 @@
 
 import Cocoa
 
-class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate, FocusedEditorWritingDelegate {
+class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate, FocusedEditorWritingDelegate, FWStashEditorDelegate {
     @IBOutlet weak var reviewMessage: NSView!
     @IBOutlet weak var innerMessage: NSView!
     @IBOutlet weak var mainScrollView: NSScrollView!
     @IBOutlet weak var focusedEditor: FocusedEditor!
+    
+    @IBOutlet weak var reviewDoneButton: NSButton!
     
     @IBOutlet weak var blankSlateContainer: NSView!
     
@@ -100,7 +102,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     }
     
     func changeSessionPoints(points: Double){
-        print("-\(points)")
         sessionSpeedPoints += points
         if sessionSpeedPoints < 1 { sessionSpeedPoints = 1 }
     }
@@ -145,12 +146,19 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         return true
     }
 
+    func hideBlankSlateMessage(){
+        MJPOPBasic(view: blankSlateContainer, propertyName: kPOPLayerOpacity, toValue: 0, easing: MJEasing.easeInOut, duration: 0.3, delay: 0)
+    }
+    
+    func stashEditorDidChange() {
+        hideBlankSlateMessage()
+    }
+    
     func textViewDidChangeSelection(notification: NSNotification) {
         if !isReviewing { return }
         let range = mainText.selectedRange()
         if range.length != 0 {
-            MJPOPBasic(view: blankSlateContainer, propertyName: kPOPLayerOpacity, toValue: 0, easing: MJEasing.easeInOut, duration: 0.5, delay: 0)
-
+            hideBlankSlateMessage()
             let string = mainText.string!
             let substring = NSString(string: string).substringWithRange(range)
             println(substring)
@@ -160,6 +168,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
             
             stashEditor.string = savedText
             stashEditor.moveToEndOfDocument(nil)
+
             
             mainText.textStorage?.addAttribute(NSForegroundColorAttributeName, value: colors.selectedText, range: range)
             mainText.textStorage?.addAttribute(NSBackgroundColorAttributeName, value: colors.selectedBackground, range: range)
@@ -234,7 +243,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         var attrString = NSMutableAttributedString(string: "\(savedText)", attributes: colors.savedAtts)
         mainText.textStorage?.setAttributedString(attrString)
         mainText.typingAttributes = colors.normalAtts
-        mainText.moveToEndOfDocument(nil)
         mainText.editable = true
         mainText.drawsBackground = true
         mainText.insertionPointColor = colors.insertionPoint
@@ -290,15 +298,24 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         
         stashContainer.shadow = shadow
         
-        MJPOPSpring(view: stashContainer, propertyName: kPOPLayerOpacity, toValue: 1, dynamicsTension: 2.1, dynamicsFriction: 4.9, dynamicsMass: 0.01)
+//        MJPOPSpring(view: stashContainer, propertyName: kPOPLayerOpacity, toValue: 1, dynamicsTension: 2.1, dynamicsFriction: 4.9, dynamicsMass: 0.01)
         
-
+        MJPOPBasic(view: stashContainer, propertyName: kPOPLayerOpacity, toValue: 1, easing: MJEasing.easeOut, duration: 0.3, delay: 0)
         
         
         // user interface
         mainText.textContainerInset = NSSize(width: 20, height: 20)
         stashEditor.textContainerInset = NSSize(width: 20, height: 20)
+
+        let centeredY = stashContainer.bounds.height/2 - blankSlateContainer.bounds.height/2
+        var animBlankSlate = MJPOPBasic(view: blankSlateContainer, propertyName: kPOPLayerPositionY, toValue: centeredY, easing: MJEasing.easeOut, duration: 0.4, delay: 0, runNow: false, animationName: "upup")
+        animBlankSlate.fromValue = centeredY-20
+        animBlankSlate.removedOnCompletion = true
+        runMJAnim(blankSlateContainer, animBlankSlate, "upup")
+        
         blankSlateContainer.alphaValue = 0.4
+        
+        
         mainText.typingAttributes = colors.sessionReviewAtts
         if editMode == .Focused {
             focusedEditor.hidden = true
@@ -376,7 +393,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         self.view.wantsLayer = true
         self.focusedEditor.wantsLayer = true
         reviewMessage.wantsLayer = true
-        stashEditor.parentView = self.view
+        stashEditor.stashEditorDelegate = self
         splitView.parentView = self.view
         mainScrollView.scrollerStyle = NSScrollerStyle.Overlay
         mainScrollView.scrollerKnobStyle = NSScrollerKnobStyle.Light
@@ -386,6 +403,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         timerView.hide()
         editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
         
+        reviewDoneButton.layer?.backgroundColor = NSColor.clearColor().CGColor
+        reviewDoneButton.font = NSFont(name: colors.mainFont, size: 14)
+        
         for windowItem in NSApplication.sharedApplication().windows {
             let window = windowItem as! NSWindow
             window.movableByWindowBackground = true
@@ -393,7 +413,8 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
             window.titlebarAppearsTransparent = true;
             window.styleMask |= NSFullSizeContentViewWindowMask;
             window.collectionBehavior = NSWindowCollectionBehavior.FullScreenPrimary
-        }
+            }
+        
         super.viewDidLoad()
         mainText.delegate = self
         
@@ -408,31 +429,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     }
 
     override func viewDidLayout() {
-//        focusedEditor.positionInView(view)
-//        println("layout")
-//        positionReviewMessageInView()
-//        positionEditorInView()
-//        
         if !isReviewing {
             timerView.frame.origin = CGPointMake(0, 0)
             }
-//        editorContainer.frame = view.bounds
-    }
-    
-    func positionReviewMessageInView(){
-//            reviewMessage.frame.origin.y = 0
-//            reviewMessage.frame.size.width = self.view.bounds.width
-//            println(reviewMessage.frame.size.width)
-//            let midPoint = reviewMessage.bounds.width/2
-//            innerMessage.frame.origin.x = midPoint-(innerMessage.bounds.width/2) // center=center, the nsway, omg
-    }
-    
-    func positionEditorInView(){
-//        let midPoint = self.view.bounds.width/2
-//        editorScrollView.frame.origin.x = midPoint - (editorScrollView.bounds.width/2)
-//        editorScrollView.frame.origin.y = 0 + reviewMessage.bounds.height
-//        editorScrollView.frame.size.height = self.view.bounds.height-25-reviewMessage.bounds.height //
-//        mainText.frame.size.width = editorScrollView.bounds.width-10
     }
     
     func updateStopWatch(){

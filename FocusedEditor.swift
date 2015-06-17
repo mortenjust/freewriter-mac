@@ -128,7 +128,6 @@ class FocusedEditor: NSTextField, NSTextFieldDelegate {
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
         
-        println("selector: \(commandSelector)")
         
         if commandSelector == Selector("insertLineBreak:") ||
             commandSelector == Selector("insertNewline:") ||
