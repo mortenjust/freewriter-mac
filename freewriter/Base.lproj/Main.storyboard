@@ -671,6 +671,10 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GRK-Jz-YuZ">
+                                                        <rect key="frame" x="147" y="406" width="48" height="48"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="0B9-1a-8Mr"/>
+                                                    </imageView>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="t1c-d2-aZd" firstAttribute="leading" secondItem="iqa-Kg-4bh" secondAttribute="leading" id="VXY-3b-Qi5"/>
@@ -731,27 +735,72 @@
                                     <constraint firstAttribute="height" constant="48" id="Xus-am-HEs"/>
                                 </constraints>
                             </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="O9f-Fi-KRV" userLabel="controlsContainer" customClass="FWControls" customModule="Freewriter" customModuleProvider="target">
+                                <rect key="frame" x="373" y="447" width="177" height="53"/>
+                                <subviews>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n2b-GE-odf" userLabel="Smaller font icon">
+                                        <rect key="frame" x="78" y="0.0" width="50" height="50"/>
+                                        <buttonCell key="cell" type="square" title="A-" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="4oO-qR-UXp">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" size="17" name="AvenirNext-Regular"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="smallerText:" target="5gI-5U-AMq" id="Nvg-n6-SgL"/>
+                                        </connections>
+                                    </button>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4MM-uc-W2m" userLabel="Fullscreen icon">
+                                        <rect key="frame" x="127" y="3" width="50" height="50"/>
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="fullscreen" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Dxv-y8-Kce">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="toggleFullScreen:" target="2Tp-Fl-jBw" id="RDN-ex-Jmz"/>
+                                        </connections>
+                                    </button>
+                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uPs-k7-cvF" userLabel="Bigger font icon">
+                                        <rect key="frame" x="29" y="0.0" width="50" height="50"/>
+                                        <buttonCell key="cell" type="square" title="A+" bezelStyle="shadowlessSquare" alignment="center" imageScaling="proportionallyDown" inset="2" id="gWG-Hx-IIR">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" size="17" name="AvenirNext-Regular"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="biggerText:" target="5gI-5U-AMq" id="Wb9-H8-2Ys"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="53" id="Em6-5t-Dpt"/>
+                                    <constraint firstAttribute="width" constant="177" id="LZM-0i-vnT"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="1MD-1f-pLE" secondAttribute="bottom" id="0I9-FL-ILP"/>
+                            <constraint firstAttribute="trailing" secondItem="O9f-Fi-KRV" secondAttribute="trailing" id="0xm-Ms-6FH"/>
                             <constraint firstAttribute="bottom" secondItem="xfm-Wf-ldW" secondAttribute="bottom" id="ATM-oq-lPE"/>
+                            <constraint firstItem="O9f-Fi-KRV" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="Lzp-Xu-3wm"/>
                             <constraint firstAttribute="trailing" secondItem="xfm-Wf-ldW" secondAttribute="trailing" id="UBu-WF-yG5"/>
                             <constraint firstItem="xfm-Wf-ldW" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="dYR-XY-sYc"/>
                             <constraint firstItem="xfm-Wf-ldW" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" id="kae-wB-eFF"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="biggerFontButton" destination="uPs-k7-cvF" id="luD-ad-Bx7"/>
                         <outlet property="blankSlateContainer" destination="6qS-nG-I3C" id="WLo-vo-9dB"/>
+                        <outlet property="controlsContainer" destination="O9f-Fi-KRV" id="BJs-3u-LtP"/>
                         <outlet property="editorContainer" destination="xfm-Wf-ldW" id="KJi-91-MsL"/>
                         <outlet property="editorScrollView" destination="qnp-E1-2ZC" id="3A3-6X-hgF"/>
                         <outlet property="focusScoreField" destination="3Xi-KZ-9ef" id="tK0-qw-nKF"/>
                         <outlet property="focusedEditor" destination="7KS-1e-6cK" id="f0Y-EP-ago"/>
+                        <outlet property="fullscreenButton" destination="4MM-uc-W2m" id="dWF-7c-uwE"/>
                         <outlet property="innerMessage" destination="mDg-lq-z7a" id="zk6-VF-shw"/>
                         <outlet property="mainScrollView" destination="qnp-E1-2ZC" id="BhK-2B-S4u"/>
                         <outlet property="mainText" destination="j5u-vD-OFB" id="0M3-Om-LFb"/>
                         <outlet property="mainView" destination="ERx-hH-rdd" id="xzx-3F-VRU"/>
                         <outlet property="reviewDoneButton" destination="lPd-AH-CyF" id="8HQ-76-g8j"/>
                         <outlet property="reviewMessage" destination="54c-gJ-ck6" id="AHL-6r-RTj"/>
+                        <outlet property="smallerFontButton" destination="n2b-GE-odf" id="xRf-cV-6SP"/>
                         <outlet property="splitView" destination="tHv-9X-hjI" id="162-IY-aGZ"/>
                         <outlet property="stashContainer" destination="iqa-Kg-4bh" id="Gly-gf-xw2"/>
                         <outlet property="stashEditor" destination="MY4-nY-kMK" id="Z9x-tl-b69"/>
@@ -785,6 +834,7 @@
     </scenes>
     <resources>
         <image name="buttonBorder" width="246" height="75"/>
+        <image name="fullscreen" width="50" height="50"/>
         <image name="highlighter" width="86" height="86"/>
         <image name="icTimer" width="14" height="17"/>
     </resources>

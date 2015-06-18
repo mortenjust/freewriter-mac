@@ -14,6 +14,12 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     @IBOutlet weak var mainScrollView: NSScrollView!
     @IBOutlet weak var focusedEditor: FocusedEditor!
     
+    @IBOutlet weak var biggerFontButton: NSButton!
+    
+    @IBOutlet weak var smallerFontButton: NSButton!
+    
+    @IBOutlet weak var fullscreenButton: NSButton!
+    
     @IBOutlet weak var reviewDoneButton: NSButton!
     
     @IBOutlet weak var blankSlateContainer: NSView!
@@ -29,6 +35,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     var savedText = String()
     var lastKeystroke : Double!
     var document : Document!
+    @IBOutlet weak var controlsContainer: FWControls!
 
    
     @IBOutlet weak var focusScoreField: NSTextField!
@@ -141,8 +148,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     }
     
     func textView(textView: NSTextView, shouldChangeTextInRange affectedCharRange: NSRange, replacementString: String) -> Bool {
-        // This was the best way I could find to bind the document to the form field in a storyboards-based app. Weird, right?
-        document.docContents = mainText.string
         return true
     }
 
@@ -152,6 +157,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     
     func stashEditorDidChange() {
         hideBlankSlateMessage()
+        document.docContents = stashEditor.string!
     }
     
     func textViewDidChangeSelection(notification: NSNotification) {
@@ -173,6 +179,7 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
             mainText.textStorage?.addAttribute(NSForegroundColorAttributeName, value: colors.selectedText, range: range)
             mainText.textStorage?.addAttribute(NSBackgroundColorAttributeName, value: colors.selectedBackground, range: range)
         }
+        document.docContents = stashEditor.string!
     }
     
     func fadeView(view:NSView, toValue:CGFloat){
@@ -339,7 +346,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         reviewMessage.layer?.pop_removeAllAnimations()
         zoomEditor(1.02, backgroundColor: colors.reviewEditorBackground)
         
-        mainText.moveToEndOfDocument(nil)
         stashEditor.moveToEndOfDocument(nil)
 
         showReviewMessage(sessionScore)
@@ -378,14 +384,12 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         document = winc.document as! Document
         
         println("dumping doccontents")
-        println(document.docContents?.length)
+        println(document.docContents.length)
         
-        if let docContents = document.docContents {
-            if docContents.length > 0 {
-                savedText = document.docContents! as String
+            if document.docContents.length > 0 {
+                self.savedText = document.docContents as String
                 self.startReviewMode()
                 }
-        }
     }
 
     override func viewDidLoad() {
@@ -402,9 +406,11 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         mainView.blendingMode = NSVisualEffectBlendingMode.BehindWindow
         timerView.hide()
         editorContainer.layer?.backgroundColor = colors.editorBackground.CGColor
-        
+        smallerFontButton.attributedTitle = NSAttributedString(string: "A", attributes: colors.fontButtonAtts)
+        biggerFontButton.attributedTitle = NSAttributedString(string: "A+", attributes: colors.fontButtonAtts)
         reviewDoneButton.layer?.backgroundColor = NSColor.clearColor().CGColor
         reviewDoneButton.font = NSFont(name: colors.mainFont, size: 14)
+        controlsContainer.appearThenDisappear()
         
         for windowItem in NSApplication.sharedApplication().windows {
             let window = windowItem as! NSWindow
@@ -426,12 +432,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         mainText.selectedTextAttributes = [ NSForegroundColorAttributeName : colors.selectedText
                                           , NSBackgroundColorAttributeName : colors.selectedBackground ]
      
-    }
-
-    override func viewDidLayout() {
-        if !isReviewing {
-            timerView.frame.origin = CGPointMake(0, 0)
-            }
     }
     
     func updateStopWatch(){

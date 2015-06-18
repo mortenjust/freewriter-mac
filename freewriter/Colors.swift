@@ -39,6 +39,7 @@ struct Colors {
     var savedAtts: [String : NSObject]!
     var sessionReviewAtts: [String : NSObject]!
     var stashEditorAtts: [String : NSObject]!
+    var fontButtonAtts: [String : NSObject]!
 
     init() {
         
@@ -57,7 +58,7 @@ struct Colors {
         // the session text
         sessionReviewAtts = [NSForegroundColorAttributeName : sessionEditorForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
 
-        
+        fontButtonAtts = [NSForegroundColorAttributeName : NSColor.whiteColor(), NSFontAttributeName : NSFont(name: mainFont, size: 17)!]
         
     }
   }

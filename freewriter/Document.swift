@@ -9,7 +9,7 @@
 import Cocoa
 
 class Document: NSDocument {
-    @IBOutlet weak var docContents = NSString()
+    var docContents = NSString()
     
     var stashedText = String()
     var stashedItems = [String]()
@@ -44,7 +44,7 @@ class Document: NSDocument {
         println("dataoftype, and this is contents: ")
         println(docContents)
         outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return docContents?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        return docContents.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
     }
 
     override func readFromData(data: NSData, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
@@ -55,10 +55,8 @@ class Document: NSDocument {
         
         if data.length > 0 {
             println("got data, writing to doccontents")
-            self.docContents = NSString(data: data, encoding: NSUTF8StringEncoding)
+            self.docContents = NSString(data: data, encoding: NSUTF8StringEncoding)!
         }
-        
-        
         return true
     }
 

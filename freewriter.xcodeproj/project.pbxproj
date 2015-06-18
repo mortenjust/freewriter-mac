@@ -29,6 +29,7 @@
 		C8FAC5271B0F92C000087B5F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8FAC5261B0F92C000087B5F /* Images.xcassets */; };
 		C8FAC52A1B0F92C000087B5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8FAC5281B0F92C000087B5F /* Main.storyboard */; };
 		C8FAC5361B0F92C000087B5F /* freewriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FAC5351B0F92C000087B5F /* freewriterTests.swift */; };
+		C8FE266B1B32461F0090C6A9 /* FWControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FE266A1B32461F0090C6A9 /* FWControls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		C8FAC52F1B0F92C000087B5F /* freewriterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freewriterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FAC5341B0F92C000087B5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8FAC5351B0F92C000087B5F /* freewriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = freewriterTests.swift; sourceTree = "<group>"; };
+		C8FE266A1B32461F0090C6A9 /* FWControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FWControls.swift; sourceTree = "<group>"; };
 		FC66AD97930FAB15A049D2B0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FF41E8A25EFC9D18D200B5AB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -127,6 +129,7 @@
 		C8FAC5121B0F92C000087B5F = {
 			isa = PBXGroup;
 			children = (
+				C8FE266A1B32461F0090C6A9 /* FWControls.swift */,
 				C80C4DAA1B2F919B00F07C85 /* FWStashEditor.swift */,
 				C80C4DA81B2F8FBE00F07C85 /* FWSplitView.swift */,
 				C80C4DA61B2F804200F07C85 /* FWTimerView.swift */,
@@ -341,6 +344,7 @@
 				C80C4DA71B2F804200F07C85 /* FWTimerView.swift in Sources */,
 				C83B27541B2B81D700175DC2 /* UserInstruction.swift in Sources */,
 				C8979EBD1B2127EE001DE5EA /* WriteEmitterScene.swift in Sources */,
+				C8FE266B1B32461F0090C6A9 /* FWControls.swift in Sources */,
 				C8FAC5231B0F92C000087B5F /* ViewController.swift in Sources */,
 				C80C4DAB1B2F919B00F07C85 /* FWStashEditor.swift in Sources */,
 				C8976F731B30FC95005021F3 /* FWButtonCell.swift in Sources */,

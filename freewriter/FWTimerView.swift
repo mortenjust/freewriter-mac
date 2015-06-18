@@ -16,6 +16,8 @@ class FWTimerView: NSView {
     
     func start(sessionLength:Double, view:NSView){
         self.hidden = false
+        
+        // maybe we dont' watnt tomove it
 //        var moveWatch = POPBasicAnimation.linearAnimation()
 //        moveWatch.property = POPAnimatableProperty.propertyWithName(kPOPLayerPositionX) as! POPAnimatableProperty
 //        moveWatch.fromValue = view.bounds.width - self.bounds.width
