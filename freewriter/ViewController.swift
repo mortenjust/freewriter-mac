@@ -142,8 +142,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     @IBAction func doneReviewPressed(sender: NSButton) {
         println("done pressed")
         savedText = stashEditor.string!
-        focusedEditor.stringValue = "Let's go again!"
-        mainText.string = " "
         startNewSession()
     }
     
@@ -256,6 +254,11 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     }
     
     func startNewSession(first:Bool=false){
+        controlsContainer.show()
+        focusedEditor.setPlaceholder("Start writing now")
+        mainText.string = ""
+        focusedEditor.stringValue = ""
+
         if let s = splitView {
         s.hidden = true
         }
@@ -274,10 +277,9 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
             startFocusEditing()
         }
     }
-    
-
 
     func startReviewMode(){
+        controlsContainer.hide()
         println("startReviewMode")
         var attrString = NSMutableAttributedString(string: "\(savedText)", attributes: colors.stashEditorAtts)
         stashEditor.textStorage?.setAttributedString(attrString)
@@ -382,14 +384,11 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
         let win = self.view.window
         let winc = win?.windowController() as! NSWindowController
         document = winc.document as! Document
-        
-        println("dumping doccontents")
-        println(document.docContents.length)
-        
-            if document.docContents.length > 0 {
-                self.savedText = document.docContents as String
-                self.startReviewMode()
-                }
+        if document.docContents.length > 0 {
+            self.savedText = document.docContents as String
+            self.startReviewMode()
+            hideBlankSlateMessage()
+            }
     }
 
     override func viewDidLoad() {

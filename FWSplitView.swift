@@ -14,8 +14,17 @@ class FWSplitView: NSSplitView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
        // setPosition(<#position: CGFloat#>, ofDividerAtIndex: <#Int#>)
-    }
 
+    }
+    
+    override func minPossiblePositionOfDividerAtIndex(dividerIndex: Int) -> CGFloat {
+            return 230
+    }
+    
+    override func maxPossiblePositionOfDividerAtIndex(dividerIndex: Int) -> CGFloat {
+        return window!.frame.width-190
+    }
+    
     
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)

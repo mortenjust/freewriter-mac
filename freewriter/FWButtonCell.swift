@@ -15,7 +15,8 @@ class FWButtonCell: NSButtonCell {
         super.init(coder: aDecoder)
         bordered = false
         backgroundColor = NSColor.clearColor()
-        attributedTitle = NSAttributedString(string: "Start new session", attributes: colors.sessionReviewAtts)
+        alignment = NSTextAlignment.CenterTextAlignment
+        attributedTitle = NSAttributedString(string: "Continue writing", attributes: colors.sessionReviewAtts)
     }
     
     override func drawBezelWithFrame(frame: NSRect, inView controlView: NSView) {

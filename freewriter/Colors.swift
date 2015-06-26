@@ -10,6 +10,8 @@ import Cocoa
 
 struct Colors {
     let textForeground = NSColor(red:1, green:1, blue:1, alpha:0.7)
+    let focusedEditorForeground = NSColor(red:1, green:1, blue:1, alpha:0.3)
+    
     let mainTextColor = NSColor(red:1, green:1, blue:1, alpha:0.7)
     
     let reviewEditorBackground = NSColor(red:0.039, green:0.020, blue:0.239, alpha:0)
@@ -33,13 +35,15 @@ struct Colors {
     let mainFont = "Avenir Next"
     let focusedFont = "Helvetica Neue Thin"
     
-    var fontSize : CGFloat = 16.0
+    var fontSize : CGFloat = 44
+    var focusedDefaultFontSize : CGFloat = 44.0
     var savedTextFontSize : CGFloat = 16.0
     var normalAtts: [String : NSObject]!
     var savedAtts: [String : NSObject]!
     var sessionReviewAtts: [String : NSObject]!
     var stashEditorAtts: [String : NSObject]!
     var fontButtonAtts: [String : NSObject]!
+    var focusedEditorPlaceholderAtts: [String : NSObject]!
 
     init() {
         
@@ -52,6 +56,8 @@ struct Colors {
         normalAtts = [NSForegroundColorAttributeName : textForeground, NSFontAttributeName : NSFont(name: focusedFont, size: fontSize)!]
         savedAtts = [NSForegroundColorAttributeName : savedTextForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
 
+        focusedEditorPlaceholderAtts = [NSForegroundColorAttributeName : focusedEditorForeground, NSFontAttributeName : NSFont(name: focusedFont, size: fontSize)!]
+        
         // the saved text
         stashEditorAtts = [NSForegroundColorAttributeName : stashEditorForeground, NSFontAttributeName : NSFont(name: mainFont, size: savedTextFontSize)!]
         

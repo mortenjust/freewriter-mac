@@ -31,6 +31,11 @@ class FocusedEditor: NSTextField, NSTextFieldDelegate {
         self.alignment = NSTextAlignment.LeftTextAlignment
         self.font = NSFont(name: colors.focusedFont, size: colors.fontSize)
         self.delegate = self
+        setPlaceholder("Start writing")
+    }
+    
+    func setPlaceholder(text : String){
+        placeholderAttributedString = NSAttributedString(string: text, attributes: colors.focusedEditorPlaceholderAtts)
     }
     
     func biggerFont(){

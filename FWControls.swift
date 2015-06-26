@@ -36,7 +36,23 @@ class FWControls: NSView {
         appear()
     }
     
-
+    func hide(){
+        if window != nil {
+        var hideAnim = MJPOPBasic(view: self, propertyName: kPOPLayerPositionY, toValue: window!.frame.size.height, easing: MJEasing.easeInOut, duration: 0.2, delay: 0, autoreverses: false, repeatCount: 0, repeatForever: false, runNow: false, animationName: "up")
+        
+        hideAnim.completionBlock = { (a, d) -> Void in
+        self.hidden = true
+        }
+        runMJAnim(self, hideAnim, "up")
+        }
+    }
+    
+    func show(){
+        self.hidden = false
+        if window != nil {
+        var hideAnim = MJPOPBasic(view: self, propertyName: kPOPLayerPositionY, toValue: window!.frame.size.height-self.bounds.height, easing: MJEasing.easeInOut, duration: 0.2, delay: 0, autoreverses: false, repeatCount: 0, repeatForever: false, runNow: true, animationName: "down")
+            }
+    }
     
     func appearThenDisappear(){
         self.wantsLayer = true
