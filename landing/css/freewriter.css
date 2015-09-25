@@ -1,0 +1,81 @@
+body {
+
+	background-color: white;
+	color: black;
+	font-family: "HelveticaNeue-Light"
+}
+
+h1 {
+	font-family: "HelveticaNeue-Thin"
+}
+
+#all-container {
+	min-width: 200px;
+	max-width: 1300px;
+	margin: 0 10% 0 10%;
+}
+
+p {
+	font-size: 120%;
+	font-family: "HelveticaNeue-Light"
+}
+
+li {
+	font-size: 120%;
+
+}
+
+#topbar {
+
+
+}
+
+#signup {
+	
+	margin: 20px 0 20px 0;
+	font-size:120%;
+	max-width: 300px;
+	font-family: "HelveticaNeue-Light"	
+}
+
+label {
+	font-weight: 100;
+	margin-top: 10px ;
+	padding: 0 ;
+}
+
+#signup input {
+	width: 100%;
+	color: black;
+}
+
+#mce-INTERESTED {
+	margin: 10px 0 0 0 ;
+
+}
+
+#signup input[type="submit"] {
+	margin-top: 20px;
+  background-color: white;
+  border-style: solid;
+  border-width: 1px;
+  width: 115px;
+  border-color: black;
+
+}
+
+#video-container {
+	margin-top:30px;
+}
+
+#inner-video {
+}
+
+
+#cycler{position:relative;}
+#cycler img{position:absolute;z-index:1}
+#cycler img.active{z-index:3}
+
+h2 {
+	margin-top: 50px;	
+}

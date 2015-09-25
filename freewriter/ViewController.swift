@@ -64,8 +64,6 @@ class ViewController: NSViewController, NSTextViewDelegate, NSAnimationDelegate,
     }
     
     
-    
-    
     @IBAction override func selectAll(sender: AnyObject?) {
         println("Select all")
     }
